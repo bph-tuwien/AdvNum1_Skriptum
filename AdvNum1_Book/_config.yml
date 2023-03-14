@@ -1,8 +1,8 @@
 # Book settings
 # Learn more at https://jupyterbook.org/customize/config.html
 
-title: 207.014 Advanced Numerical Methods in Building Science 1 VU
-author: bi.wbb
+title: 207.014 Advanced Numerical Methods in Building Science 1 VU Work in Progress
+author: Thomas Bednar, Andreas Sarkany
 logo: logo_small.png
 
 # Force re-execution of notebooks on each build.

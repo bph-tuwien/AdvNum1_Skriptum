@@ -445,4 +445,5 @@ b = np.zeros(n)
 b[17] = -10 / dx **2
 
 phi = np.linalg.solve(A, b)
-plt.plot(p
+plt.plot(phi)
+

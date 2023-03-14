@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Numerical Methods-An Introduction &#8212; 207.014 Advanced Numerical Methods in Building Science 1 VU</title>
+    <title>Numerical Methods-An Introduction &#8212; 207.014 Advanced Numerical Methods in Building Science 1 VU Work in Progress</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -87,7 +87,7 @@ const thebe_selector_output = ".output, .cell_output"
       <img src="_static/logo_small.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">207.014 Advanced Numerical Methods in Building Science 1 VU</h1>
+      <h1 class="site-logo" id="site-title">207.014 Advanced Numerical Methods in Building Science 1 VU Work in Progress</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -467,7 +467,7 @@ const thebe_selector_output = ".output, .cell_output"
 </section>
 <section id="the-finite-difference-method">
 <h2>The Finite Difference Method<a class="headerlink" href="#the-finite-difference-method" title="Permalink to this headline">¶</a></h2>
-<p>One of these discretization methods is the Finite Differences Method. It is based on the Taylor-series expansion of a function around a certain point. It can be sufficiently explained by fairly simple mathematical methods and is very intuitive in its nature. A condensed explanation of the most important concepts will be given here, for a more detailed explanation turn to your lecture notes and textbooks like <span id="id3">[]</span>.</p>
+<p>One of these discretization methods is the Finite Differences Method. It is based on the Taylor-series expansion of a function around a certain point. It can be sufficiently explained by fairly simple mathematical methods and is very intuitive in its nature. A condensed explanation of the most important concepts will be given here, for a more detailed explanation turn to your lecture notes and textbooks like <span id="id3">[<a class="reference internal" href="References.html#id2" title="J. C. Butcher. Numerical Methods for Ordinary Differential Equations. John Wiley &amp; Sons, Ltd, first edition, 2016. doi:10.1002/9781119121534.">Butcher, 2016</a>]</span>.</p>
 <p>Let’s consider <span class="math notranslate nohighlight">\(T\)</span>, which in our example should be an arbitrary function. If we have a discrete calculation domain like given in <a class="reference internal" href="#fdm-points"><span class="std std-numref">Fig. 1</span></a> and want to approximate the first- or second-derivative of <span class="math notranslate nohighlight">\(T\)</span> in this domain we can do this by performing a Taylor-series expansion. Since we want to derive the function for grid point 2 we will develop our Taylor-series around this point once for the grid point 1 and once for the grid point 3.</p>
 <div class="math notranslate nohighlight" id="equation-fdm-taylor-series-1">
 <span class="eqno">(2)<a class="headerlink" href="#equation-fdm-taylor-series-1" title="Permalink to this equation">¶</a></span>\[
@@ -891,7 +891,7 @@ b_{17} = - A_{17,17} \cdot x_{17}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x11e37729d30&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x1ca5e3f8700&gt;]
 </pre></div>
 </div>
 <img alt="_images/Numerics_Intro_15_1.png" src="_images/Numerics_Intro_15_1.png" />
