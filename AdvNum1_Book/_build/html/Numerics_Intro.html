@@ -135,6 +135,38 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
   </ul>
  </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="RC_networks_motivation.html">
+   RC-Networks
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="RC_network_ham_sim_theory.html">
+     Theory: RC-Networks for the simulation of building components
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="RC_network_ham_sim_ex.html">
+     Exercise: RC-Networks for the simulation of building components
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="RC_network_building_sim_theory.html">
+     Theory: RC-Networks for the simulation of rooms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="RC_network_building_sim_ex.html">
+     Exercise: RC-Networks for the simulation of rooms
+    </a>
+   </li>
+  </ul>
+ </li>
  <li class="toctree-l1">
   <a class="reference internal" href="References.html">
    Literature
@@ -297,6 +329,11 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
   </ul>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#building-matrices-for-our-operators">
+   Building Matrices for our operators
+  </a>
+ </li>
 </ul>
 
             </nav>
@@ -386,6 +423,11 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
   </ul>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#building-matrices-for-our-operators">
+   Building Matrices for our operators
+  </a>
+ </li>
 </ul>
 
                         </nav>
@@ -425,7 +467,7 @@ const thebe_selector_output = ".output, .cell_output"
 </section>
 <section id="the-finite-difference-method">
 <h2>The Finite Difference Method<a class="headerlink" href="#the-finite-difference-method" title="Permalink to this headline">¶</a></h2>
-<p>One of these discretization methods is the Finite Differences Method. It is based on the Taylor-series expansion of a function around a certain point. It can be sufficiently explained by fairly simple mathematical methods and is very intuitive in its nature. A condensed explanation of the most important concepts will be given here, for a more detailed explanation turn to your lecture notes and textbooks like <span id="id3">[<a class="reference internal" href="References.html#id7"><em>Numerical Methods for Ordinary Differential Equations</em>, 2016</a>]</span>.</p>
+<p>One of these discretization methods is the Finite Differences Method. It is based on the Taylor-series expansion of a function around a certain point. It can be sufficiently explained by fairly simple mathematical methods and is very intuitive in its nature. A condensed explanation of the most important concepts will be given here, for a more detailed explanation turn to your lecture notes and textbooks like <span id="id3">[]</span>.</p>
 <p>Let’s consider <span class="math notranslate nohighlight">\(T\)</span>, which in our example should be an arbitrary function. If we have a discrete calculation domain like given in <a class="reference internal" href="#fdm-points"><span class="std std-numref">Fig. 1</span></a> and want to approximate the first- or second-derivative of <span class="math notranslate nohighlight">\(T\)</span> in this domain we can do this by performing a Taylor-series expansion. Since we want to derive the function for grid point 2 we will develop our Taylor-series around this point once for the grid point 1 and once for the grid point 3.</p>
 <div class="math notranslate nohighlight" id="equation-fdm-taylor-series-1">
 <span class="eqno">(2)<a class="headerlink" href="#equation-fdm-taylor-series-1" title="Permalink to this equation">¶</a></span>\[
@@ -773,6 +815,88 @@ T_{2}(t_{i}) = T_{2}(t_{i} + \Delta t) - \frac{dT(t_{i} + \Delta t)}{dt} \Delta 
 </div>
 </section>
 </section>
+</section>
+<section id="building-matrices-for-our-operators">
+<h2>Building Matrices for our operators<a class="headerlink" href="#building-matrices-for-our-operators" title="Permalink to this headline">¶</a></h2>
+<p>We will focus on creating linear equation systems to solve our discretized PDEs. The main reason for this is that we want to take advantage of already implemented solvers and many of them are well optimized to solve LES. As an example it should be shown how to use a matrix to create the Laplace-Operator when trying to solve the Laplace Equation <a class="reference internal" href="#equation-laplace-eq">(9)</a>numerically and build an LES.</p>
+<div class="math notranslate nohighlight" id="equation-laplace-eq">
+<span class="eqno">(9)<a class="headerlink" href="#equation-laplace-eq" title="Permalink to this equation">¶</a></span>\[
+\Delta \Phi = 0
+\]</div>
+<p>We know that the Laplace Operator, denoted with <span class="math notranslate nohighlight">\(\Delta\)</span>, is nothing else than <span class="math notranslate nohighlight">\(\nabla^{2}\)</span> and therefore:</p>
+<div class="math notranslate nohighlight" id="equation-laplace-2-eq">
+<span class="eqno">(10)<a class="headerlink" href="#equation-laplace-2-eq" title="Permalink to this equation">¶</a></span>\[
+\frac{\partial^{2}\Phi}{\partial x^{2}} + \frac{\partial^{2}\Phi}{\partial y^{2}} + \frac{\partial^{2}\Phi}{\partial z^{2}}= 0
+\]</div>
+<p>For simplicity let’s look at the problem only in 1D.</p>
+<div class="math notranslate nohighlight" id="equation-laplace-3-eq">
+<span class="eqno">(11)<a class="headerlink" href="#equation-laplace-3-eq" title="Permalink to this equation">¶</a></span>\[
+\frac{\partial^{2}\Phi}{\partial x^{2}}= 0
+\]</div>
+<p>Now we know, that we can discretize this equation using finite differences. Consider a discretized problem domain <span class="math notranslate nohighlight">\(\Omega (0,1)\)</span>, where <span class="math notranslate nohighlight">\(n\)</span> denotes the current grid point and <span class="math notranslate nohighlight">\(n-1\)</span> or respectively <span class="math notranslate nohighlight">\(n+1\)</span> the immediate neighbour.</p>
+<div class="math notranslate nohighlight" id="equation-laplace-fdm-eq">
+<span class="eqno">(12)<a class="headerlink" href="#equation-laplace-fdm-eq" title="Permalink to this equation">¶</a></span>\[
+\frac{\Phi_{n+1} - 2 \Phi{n} + \Phi{n-1}}{\Delta x{2}} = 0
+\]</div>
+<p>When creating the linear equations system of the shape
+$<span class="math notranslate nohighlight">\(
+Ax = b
+\)</span>$</p>
+<p>in this case <span class="math notranslate nohighlight">\(A\)</span> will be a depiction of our Laplace operator. After some investigation of <a class="reference internal" href="#equation-laplace-fdm-eq">(12)</a>we can see that we could write this for all equations as</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} A = \frac{1}{\Delta x^{2}}
+ \begin{bmatrix}
+    -2 &amp; 1 &amp; 0 &amp;(...)  \\
+    1  &amp; -2 &amp; 1 &amp; 0 &amp;(...)  \\
+    0  &amp;  1  &amp; -2 &amp; 1 &amp; 0 &amp;(...)  \\
+    \  &amp;  \  &amp;  (...)  &amp;\ &amp; \  &amp; \    \\
+      (...) &amp;0  &amp;  1  &amp; -2 &amp; 1 &amp; 0   \\
+                &amp;  (...) &amp;0&amp; 1 &amp; -2 &amp; 1   \\
+                &amp;  &amp;  (...) &amp;    0  &amp; 1 &amp; -2 \\
+\end{bmatrix}
+\end{split}\]</div>
+<p>Let’s choose a discretization of <span class="math notranslate nohighlight">\(n = 100\)</span> points for our calculation. This leads to an unknown solution vector for <span class="math notranslate nohighlight">\(\Phi\)</span> with <span class="math notranslate nohighlight">\(n\)</span> entries.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} x =
+ \begin{bmatrix}
+    \Phi_{0} \\
+    \Phi_{1} \\
+    \ \\
+    ...\\
+    \ \\
+    \Phi_{n-1} \\
+    \Phi_{n} \\
+\end{bmatrix}
+\end{split}\]</div>
+<p>Furthermore, assume that we have some known value of <span class="math notranslate nohighlight">\(\Phi_{17} = 10\)</span> given to us as a boundary condition.</p>
+<p>We want to put all our known values in the <span class="math notranslate nohighlight">\(b\)</span> vector. Since we know <span class="math notranslate nohighlight">\(\Phi_{17}\)</span> we put it in our <span class="math notranslate nohighlight">\(b\)</span> vector. This means subtracting it from <span class="math notranslate nohighlight">\(A\)</span> to put it on the other side of the equation.</p>
+<div class="math notranslate nohighlight">
+\[
+b_{17} = - A_{17,17} \cdot x_{17}
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>   <span class="c1">#number of unkowns</span>
+<span class="n">L</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">dx</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">100</span>
+<span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">k</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="o">*-</span><span class="mi">2</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">1</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">A</span> <span class="o">/</span> <span class="n">dx</span> <span class="o">**</span><span class="mi">2</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">b</span><span class="p">[</span><span class="mi">17</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10</span> <span class="o">/</span> <span class="n">dx</span> <span class="o">**</span><span class="mi">2</span>
+
+<span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x11e37729d30&gt;]
+</pre></div>
+</div>
+<img alt="_images/Numerics_Intro_15_1.png" src="_images/Numerics_Intro_15_1.png" />
+</div>
+</div>
 </section>
 </section>
 

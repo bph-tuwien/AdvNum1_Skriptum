@@ -29,7 +29,7 @@
 # To make any numerical calculations the first step that has to be taken is the discretization of the problem domain, but why? The concepts the equations we are dealing with describe are of general and therefore continuous nature.  Discretization allows us to replace the continuous information with discrete values and make these problems computable with algebraic methods.
 # 
 # ## The Finite Difference Method
-# One of these discretization methods is the Finite Differences Method. It is based on the Taylor-series expansion of a function around a certain point. It can be sufficiently explained by fairly simple mathematical methods and is very intuitive in its nature. A condensed explanation of the most important concepts will be given here, for a more detailed explanation turn to your lecture notes and textbooks like {cite}`NumericalMethodsOrdinary2016`.
+# One of these discretization methods is the Finite Differences Method. It is based on the Taylor-series expansion of a function around a certain point. It can be sufficiently explained by fairly simple mathematical methods and is very intuitive in its nature. A condensed explanation of the most important concepts will be given here, for a more detailed explanation turn to your lecture notes and textbooks like {cite}`butcherNumericalMethodsOrdinary2016`.
 # 
 # Let's consider $T$, which in our example should be an arbitrary function. If we have a discrete calculation domain like given in {numref}`FDM_points` and want to approximate the first- or second-derivative of $T$ in this domain we can do this by performing a Taylor-series expansion. Since we want to derive the function for grid point 2 we will develop our Taylor-series around this point once for the grid point 1 and once for the grid point 3.
 # 
@@ -365,3 +365,84 @@ plt.show()
 # ```{important}
 # Different numerical integrators are better suited for certain problems. You can improve your algorithms a lot by using integrators which are built for your specifc problems. E.g. integrators which can deal better with PDEs of higher order and so on. This is where the mathematical background of the equations becomes of interest. For prototyping it is usually enough to try a couple of the most used ones and compare them in relation to execution time and pick the best performer.
 # ```
+
+# ## Building Matrices for our operators
+# We will focus on creating linear equation systems to solve our discretized PDEs. The main reason for this is that we want to take advantage of already implemented solvers and many of them are well optimized to solve LES. As an example it should be shown how to use a matrix to create the Laplace-Operator when trying to solve the Laplace Equation {eq}`laplace_eq`numerically and build an LES.
+# 
+# $$
+# \Delta \Phi = 0
+# $$(laplace_eq)
+# 
+# We know that the Laplace Operator, denoted with $\Delta$, is nothing else than $\nabla^{2}$ and therefore:
+# 
+# $$
+# \frac{\partial^{2}\Phi}{\partial x^{2}} + \frac{\partial^{2}\Phi}{\partial y^{2}} + \frac{\partial^{2}\Phi}{\partial z^{2}}= 0
+# $$(laplace_2_eq)
+# 
+# For simplicity let's look at the problem only in 1D.
+# 
+# $$
+# \frac{\partial^{2}\Phi}{\partial x^{2}}= 0
+# $$(laplace_3_eq)
+# 
+# Now we know, that we can discretize this equation using finite differences. Consider a discretized problem domain $\Omega (0,1)$, where $n$ denotes the current grid point and $n-1$ or respectively $n+1$ the immediate neighbour.
+# 
+# $$
+# \frac{\Phi_{n+1} - 2 \Phi{n} + \Phi{n-1}}{\Delta x{2}} = 0
+# $$(laplace_fdm_eq)
+# 
+# When creating the linear equations system of the shape
+# $$
+# Ax = b
+# $$
+# 
+# in this case $A$ will be a depiction of our Laplace operator. After some investigation of {eq}`laplace_fdm_eq`we can see that we could write this for all equations as
+# 
+# $$ A = \frac{1}{\Delta x^{2}}
+#  \begin{bmatrix}
+#     -2 & 1 & 0 &(...)  \\
+#     1  & -2 & 1 & 0 &(...)  \\
+#     0  &  1  & -2 & 1 & 0 &(...)  \\
+#     \  &  \  &  (...)  &\ & \  & \    \\
+#       (...) &0  &  1  & -2 & 1 & 0   \\
+#                 &  (...) &0& 1 & -2 & 1   \\
+#                 &  &  (...) &    0  & 1 & -2 \\
+# \end{bmatrix}
+# $$
+# 
+# Let's choose a discretization of $n = 100$ points for our calculation. This leads to an unknown solution vector for $\Phi$ with $n$ entries.
+# 
+# $$ x =
+#  \begin{bmatrix}
+#     \Phi_{0} \\
+#     \Phi_{1} \\
+#     \ \\
+#     ...\\
+#     \ \\
+#     \Phi_{n-1} \\
+#     \Phi_{n} \\
+# \end{bmatrix}
+# $$
+# 
+# Furthermore, assume that we have some known value of $\Phi_{17} = 10$ given to us as a boundary condition.
+# 
+# We want to put all our known values in the $b$ vector. Since we know $\Phi_{17}$ we put it in our $b$ vector. This means subtracting it from $A$ to put it on the other side of the equation.
+# 
+# $$
+# b_{17} = - A_{17,17} \cdot x_{17}
+# $$
+
+# In[7]:
+
+
+n = 100   #number of unkowns
+L = 1
+dx = 1/100
+phi = np.zeros(n)
+A = np.eye(n,n,k=-1)*1 + np.eye(n,n)*-2 + np.eye(n,n,k=1)*1
+A = A / dx **2
+b = np.zeros(n)
+b[17] = -10 / dx **2
+
+phi = np.linalg.solve(A, b)
+plt.plot(p
