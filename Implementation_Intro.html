@@ -1,0 +1,552 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Implementation - Some general thoughts &#8212; 207.014 Advanced Numerical Methods in Building Science 1 VU Work in Progress</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="RC-Networks" href="RC_networks_motivation.html" />
+    <link rel="prev" title="Numerical Methods-An Introduction" href="Numerics_Intro.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo_small.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">207.014 Advanced Numerical Methods in Building Science 1 VU Work in Progress</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   207.014 Advanced Numerical Methods in Building Science 1 VU
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Contents
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Motivation.html">
+   Motivation
+  </a>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="Numerics_Motivation.html">
+   Introduction to numerical methods-An engineers point of view
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="Numerics_Intro.html">
+     Numerical Methods-An Introduction
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Implementation - Some general thoughts
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="RC_networks_motivation.html">
+   RC-Networks
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="RC_network_ham_sim_theory.html">
+     Theory: RC-Networks for the simulation of building components
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="RC_network_ham_sim_ex.html">
+     Exercise: RC-Networks for the simulation of building components
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="RC_network_building_sim_theory.html">
+     Theory: RC-Networks for the simulation of rooms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="RC_network_building_sim_ex.html">
+     Exercise: RC-Networks for the simulation of rooms
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="References.html">
+   Literature
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/Implementation_Intro.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/andreass0/AdvNum1_Book/master?urlpath=tree/AdvNum1_Book/Implementation_Intro.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-to-look-out-for">
+   What to look out for
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#unnecessary-looping">
+     Unnecessary looping
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#smarter-ways-of-implementation">
+     Smarter ways of implementation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#object-oriented-programming">
+     Object oriented programming
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Implementation - Some general thoughts</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-to-look-out-for">
+   What to look out for
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#unnecessary-looping">
+     Unnecessary looping
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#smarter-ways-of-implementation">
+     Smarter ways of implementation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#object-oriented-programming">
+     Object oriented programming
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="implementation-some-general-thoughts">
+<h1>Implementation - Some general thoughts<a class="headerlink" href="#implementation-some-general-thoughts" title="Permalink to this headline">¶</a></h1>
+<p>A brief overview of what to look out for when implementing numerical concepts and some personal preferences will be given.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>It is good to make your mind up about this stuff before you start to code, but don’t waste your time too long on this. As long as you are not working on insanely huge projects, you can always optimize and restructure your code later. The first step for the numerical analyst is to produce results, but after that you may consider to clean up the potential mess you created.</p>
+</div>
+<section id="what-to-look-out-for">
+<h2>What to look out for<a class="headerlink" href="#what-to-look-out-for" title="Permalink to this headline">¶</a></h2>
+<section id="unnecessary-looping">
+<h3>Unnecessary looping<a class="headerlink" href="#unnecessary-looping" title="Permalink to this headline">¶</a></h3>
+<p>This works:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K_Array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K_Array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">K</span> <span class="ow">in</span> <span class="n">K_List</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">K</span><span class="o">.</span><span class="n">index</span> <span class="o">==</span> <span class="n">index</span><span class="p">:</span>
+                    <span class="n">K_Array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">K_value</span>
+                    <span class="n">K_Array</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">K_value</span>
+</pre></div>
+</div>
+<p>But we have a lot of loops we have to iterate through. When using Numpys <code class="docutils literal notranslate"><span class="pre">ndenumerate</span></code> function we can easily get rid of one of the loops.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">ndindex</span><span class="p">(</span><span class="n">K_Array</span><span class="p">):</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>    <span class="c1"># Row index</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>    <span class="c1"># Column index</span>
+        <span class="n">str_index</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">K</span> <span class="ow">in</span> <span class="n">K_List</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">K</span><span class="o">.</span><span class="n">index</span> <span class="o">==</span> <span class="n">str_index</span><span class="p">:</span>
+                <span class="n">K_Array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">K_value</span>
+                <span class="n">K_Array</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">K_value</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Think of each loop and ask yourself if you are really needing it. Are there built in functions which can do the same? They will mostly be faster than whatever you can implement in a feasible amount of time. Always try to vecotrize before doing anything else!</p>
+</div>
+</section>
+<section id="smarter-ways-of-implementation">
+<h3>Smarter ways of implementation<a class="headerlink" href="#smarter-ways-of-implementation" title="Permalink to this headline">¶</a></h3>
+<p>Let’s look again at this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">ndenumerate</span><span class="p">(</span><span class="n">K_Array</span><span class="p">):</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>    <span class="c1"># Row index</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>    <span class="c1"># Column index</span>
+    <span class="n">str_index</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">K</span> <span class="ow">in</span> <span class="n">K_List</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">K</span><span class="o">.</span><span class="n">index</span> <span class="o">==</span> <span class="n">str_index</span><span class="p">:</span>
+                    <span class="n">K_Array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">K_value</span>
+                    <span class="n">K_Array</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">K_value</span>
+</pre></div>
+</div>
+<p>It seems like we are trying to find some identifier which happens to be equal to some position in the matrix.
+This UID seems to be stored as a parameter of the object <code class="docutils literal notranslate"><span class="pre">K</span></code>. Why not create a dictionary where we can directly access these elements based on their unique identifier?</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="n">K_index_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">index</span> <span class="k">for</span> <span class="n">K</span> <span class="ow">in</span> <span class="n">K_List</span><span class="p">]</span>
+<span class="n">K_value_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">K_value</span> <span class="k">for</span> <span class="n">K</span> <span class="ow">in</span> <span class="n">K_List</span><span class="p">]</span>
+<span class="n">K_value_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">K_index_list</span><span class="p">,</span> <span class="n">K_value_list</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">ndenumerate</span><span class="p">(</span><span class="n">K_Array</span><span class="p">):</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>    <span class="c1"># Row index</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>    <span class="c1"># Column index</span>
+    <span class="n">str_index</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">str_index</span> <span class="ow">in</span> <span class="n">K_value_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">K_Array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">K_value_dict</span><span class="p">[</span><span class="n">str_index</span><span class="p">]</span>
+        <span class="n">K_Array</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">K_value_dict</span><span class="p">[</span><span class="n">str_index</span><span class="p">]</span>     <span class="c1"># Symmetrical Matrix</span>
+</pre></div>
+</div>
+</section>
+<section id="object-oriented-programming">
+<h3>Object oriented programming<a class="headerlink" href="#object-oriented-programming" title="Permalink to this headline">¶</a></h3>
+<p>Especially for prototyping where readability and ease of implementation are of interest, object oriented programming (OOP) may help you code concepts and ideas in a more straightforward way. Furthermore, when projects get bigger, it is easier to continue to work with the same code and expand it when needed.</p>
+<p>For example, if I have problem where I want to calculate the U-value of a wall of course I can do it like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculate U-value#</span>
+
+<span class="k">def</span> <span class="nf">u_value</span><span class="p">(</span><span class="n">Rse</span><span class="p">,</span> <span class="n">thickness</span><span class="p">,</span> <span class="n">conduction</span><span class="p">,</span> <span class="n">Rsi</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Calculates U-value</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">Rse</span> <span class="o">+</span> <span class="n">thickness</span> <span class="o">/</span> <span class="n">conduction</span> <span class="o">+</span> <span class="n">Rsi</span><span class="p">)</span>
+
+<span class="c1"># First wall</span>
+<span class="n">conduction_1</span> <span class="o">=</span> <span class="mf">2.3</span> <span class="c1"># in W/mK</span>
+<span class="n">thickness_1</span> <span class="o">=</span> <span class="mf">0.2</span> <span class="c1"># in meters</span>
+<span class="n">Rsi_1</span> <span class="o">=</span> <span class="mf">0.13</span> <span class="c1"># in m²K/W</span>
+<span class="n">Rse_1</span> <span class="o">=</span> <span class="mf">0.04</span> <span class="c1"># in m²K/W</span>
+
+<span class="c1"># Second wall</span>
+<span class="n">conduction_2</span> <span class="o">=</span> <span class="mf">1.2</span> <span class="c1"># in W/mK</span>
+<span class="n">thickness_2</span> <span class="o">=</span> <span class="mf">0.2</span> <span class="c1"># in meters</span>
+<span class="n">Rsi_2</span> <span class="o">=</span> <span class="mf">0.13</span> <span class="c1"># in m²K/W</span>
+<span class="n">Rse_2</span> <span class="o">=</span> <span class="mf">0.04</span> <span class="c1"># in m²K/W</span>
+
+<span class="n">u_wall_1</span> <span class="o">=</span> <span class="n">u_value</span><span class="p">(</span><span class="n">Rse_1</span><span class="p">,</span> <span class="n">thickness_1</span><span class="p">,</span> <span class="n">conduction_1</span><span class="p">,</span> <span class="n">Rsi_1</span><span class="p">)</span>
+<span class="n">u_wall_2</span> <span class="o">=</span> <span class="n">u_value</span><span class="p">(</span><span class="n">Rse_2</span><span class="p">,</span> <span class="n">thickness_2</span><span class="p">,</span> <span class="n">conduction_2</span><span class="p">,</span> <span class="n">Rsi_2</span><span class="p">)</span>
+
+<span class="p">(</span><span class="n">u_wall_1</span><span class="p">,</span> <span class="n">u_wall_2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3.8917089678511, 2.9702970297029703)
+</pre></div>
+</div>
+</div>
+</div>
+<p>But with almost the same effort I could have created a <code class="docutils literal notranslate"><span class="pre">Class</span> <span class="pre">Wall</span></code> which can have the needed parameters and the function to calculate its U-value.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Wall</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Rse</span><span class="p">,</span> <span class="n">thickness</span><span class="p">,</span> <span class="n">conduction</span><span class="p">,</span> <span class="n">Rsi</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thickness</span> <span class="o">=</span> <span class="n">thickness</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conduction</span> <span class="o">=</span> <span class="n">conduction</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Rse</span> <span class="o">=</span> <span class="n">Rse</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Rsi</span> <span class="o">=</span> <span class="n">Rsi</span>
+
+    <span class="k">def</span> <span class="nf">u_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Rse</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">thickness</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">conduction</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">Rsi</span><span class="p">)</span>
+
+
+<span class="n">wall1</span> <span class="o">=</span> <span class="n">Wall</span><span class="p">(</span><span class="n">Rse</span><span class="o">=</span><span class="mf">0.04</span><span class="p">,</span> <span class="n">thickness</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">conduction</span><span class="o">=</span><span class="mf">2.3</span><span class="p">,</span> <span class="n">Rsi</span><span class="o">=</span><span class="mf">0.13</span><span class="p">)</span>
+<span class="n">wall2</span> <span class="o">=</span> <span class="n">Wall</span><span class="p">(</span><span class="n">Rse</span><span class="o">=</span><span class="mf">0.04</span><span class="p">,</span> <span class="n">thickness</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">conduction</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">Rsi</span><span class="o">=</span><span class="mf">0.13</span><span class="p">)</span>
+
+<span class="p">(</span><span class="n">wall1</span><span class="o">.</span><span class="n">u_value</span><span class="p">(),</span> <span class="n">wall2</span><span class="o">.</span><span class="n">u_value</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3.8917089678511, 2.9702970297029703)
+</pre></div>
+</div>
+</div>
+</div>
+<p>And if I see while I am working on the project that I need further information to define my wall or it needs to have more functions for certain evaluations, I can simply add those as parameters to my main class.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Wall</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Rse</span><span class="p">,</span> <span class="n">thickness</span><span class="p">,</span> <span class="n">conduction</span><span class="p">,</span> <span class="n">Rsi</span><span class="p">,</span> <span class="n">some_extra_parameter</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thickness</span> <span class="o">=</span> <span class="n">thickness</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conduction</span> <span class="o">=</span> <span class="n">conduction</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Rse</span> <span class="o">=</span> <span class="n">Rse</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Rsi</span> <span class="o">=</span> <span class="n">Rsi</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">some_extra_parameter</span> <span class="o">=</span> <span class="n">some_extra_parameter</span>
+
+    <span class="k">def</span> <span class="nf">u_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Rse</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">thickness</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">conduction</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">Rsi</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">super_mysterious_optimized_calculation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="c1"># something super_mysterious_optimized</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="Numerics_Intro.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Numerical Methods-An Introduction</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="RC_networks_motivation.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">RC-Networks</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By bi.wbb<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
