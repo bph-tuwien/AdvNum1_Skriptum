@@ -1,0 +1,742 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Theoretische Grundlagen der Wärme- und Feuchtspeicherung und des -transportes &#8212; 207.014 Advanced Numerical Methods in Building Science 1 VU</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo_small.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">207.014 Advanced Numerical Methods in Building Science 1 VU</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   207.014 Advanced Numerical Methods in Building Science 1 VU
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Contents
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Motivation.html">
+   Motivation
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="Numerics_Motivation.html">
+   Motivation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="Numerics_Intro.html">
+     Numerical Methods-A simplified overview
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="References.html">
+   Literature
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/Diffusive_Theorie.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/andreass0/AdvNum1_Book/master?urlpath=tree/AdvNum1_Book/Diffusive_Theorie.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#allgemeine-transportgleichungen">
+   Allgemeine Transportgleichungen
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#warmespeicherung-und-transport">
+     Wärmespeicherung und -transport
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#feuchtespeicherung-und-transport">
+     Feuchtespeicherung und -transport
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#numerische-losung-einer-partiellen-differentialgleichung-am-beispiel-des-temperaturfeldes">
+   Numerische Lösung einer partiellen Differentialgleichung am Beispiel des Temperaturfeldes
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#finite-differenzen-methode">
+     Finite Differenzen Methode
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#diskretisierung-der-geometrie">
+       Diskretisierung der Geometrie
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#diskretisierung-der-differentialgleichung">
+       Diskretisierung der Differentialgleichung
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#zeitliche-integration-euler-verfahren">
+     Zeitliche Integration - Euler-Verfahren
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#randbedingungen">
+   Randbedingungen
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#konvektiver-warmeubergangskoeffizient">
+     Konvektiver Wärmeübergangskoeffizient
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#radiativer-warmeubergangskoeffizient">
+     Radiativer Wärmeübergangskoeffizient
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Theoretische Grundlagen der Wärme- und Feuchtspeicherung und des -transportes</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#allgemeine-transportgleichungen">
+   Allgemeine Transportgleichungen
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#warmespeicherung-und-transport">
+     Wärmespeicherung und -transport
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#feuchtespeicherung-und-transport">
+     Feuchtespeicherung und -transport
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#numerische-losung-einer-partiellen-differentialgleichung-am-beispiel-des-temperaturfeldes">
+   Numerische Lösung einer partiellen Differentialgleichung am Beispiel des Temperaturfeldes
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#finite-differenzen-methode">
+     Finite Differenzen Methode
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#diskretisierung-der-geometrie">
+       Diskretisierung der Geometrie
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#diskretisierung-der-differentialgleichung">
+       Diskretisierung der Differentialgleichung
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#zeitliche-integration-euler-verfahren">
+     Zeitliche Integration - Euler-Verfahren
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#randbedingungen">
+   Randbedingungen
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#konvektiver-warmeubergangskoeffizient">
+     Konvektiver Wärmeübergangskoeffizient
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#radiativer-warmeubergangskoeffizient">
+     Radiativer Wärmeübergangskoeffizient
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="theoretische-grundlagen-der-warme-und-feuchtspeicherung-und-des-transportes">
+<h1>Theoretische Grundlagen der Wärme- und Feuchtspeicherung und des -transportes<a class="headerlink" href="#theoretische-grundlagen-der-warme-und-feuchtspeicherung-und-des-transportes" title="Permalink to this headline">¶</a></h1>
+<p>Wenn eine Koppelung zwischen Wärme- und Feuchtetransport in einer Berechnung besteht spricht man allgemein von einer
+hygrothermischen Simulation. Diese Koppelung bringt den Vorteil, dass der Einfluss des Feuchtegehaltes auf die
+Wärmeleitfähigkeit berücksichtigt werden kann. Die Differentialgleichungen, welche für solche Berechnungen miteinander
+gekoppelt werden müssen, werden im folgenden vorgestellt, mit dem Ziel ein Verständnis für die unterliegenden Grundlagen
+und Konzepte zu vermitteln.</p>
+<section id="allgemeine-transportgleichungen">
+<h2>Allgemeine Transportgleichungen<a class="headerlink" href="#allgemeine-transportgleichungen" title="Permalink to this headline">¶</a></h2>
+<section id="warmespeicherung-und-transport">
+<h3>Wärmespeicherung und -transport<a class="headerlink" href="#warmespeicherung-und-transport" title="Permalink to this headline">¶</a></h3>
+<p>Bei Betrachtung der Wärmeleitung ergibt sich aus Gleichung <code class="xref eq docutils literal notranslate"><span class="pre">delta_V_q_eq</span></code></p>
+<div class="math notranslate nohighlight" id="equation-dt-eq">
+<span class="eqno">()<a class="headerlink" href="#equation-dt-eq" title="Permalink to this equation">¶</a></span>\[ \rho c \frac{\partial T}{\partial t} = -\nabla \cdot q + h \]</div>
+<p>Dabei beschreibt <span class="math notranslate nohighlight">\(h\)</span> (J/(m³s)) eine Wärmequelle. Diese kann ausgelöst sein durch mechanisches Heizen, chemische
+Reaktionen etc.</p>
+<p>Die Wärmestromdichte q (J/(m²s) ist definiert als</p>
+<div class="math notranslate nohighlight" id="equation-q-diff-conv-eq">
+<span class="eqno">()<a class="headerlink" href="#equation-q-diff-conv-eq" title="Permalink to this equation">¶</a></span>\[ q = q_{diff} + q_{conv}\]</div>
+<p>wobei <span class="math notranslate nohighlight">\(q_{diff}\)</span> den diffusiven Anteil und <span class="math notranslate nohighlight">\(q_{conv}\)</span> den durch Konvektion tranportierten Anteil der Wärmestromdichte
+beschreibt. Bei Vernachlässigung konvektiver Phänomene können wir <span class="math notranslate nohighlight">\(q_{conv} = 0\)</span> setzen.</p>
+<p>Für den diffusiven eindimensionalen Fall ist <span class="math notranslate nohighlight">\(q\)</span> definiert als</p>
+<div class="math notranslate nohighlight" id="equation-q-delta-x-eq">
+<span class="eqno">()<a class="headerlink" href="#equation-q-delta-x-eq" title="Permalink to this equation">¶</a></span>\[ q = q_{diff} = \lambda \cdot \frac{T - (T + \Delta T)}{\Delta x}\]</div>
+<div class="math notranslate nohighlight" id="equation-q-delta-x-eq">
+<span class="eqno">()<a class="headerlink" href="#equation-q-delta-x-eq" title="Permalink to this equation">¶</a></span>\[ q = -\lambda \cdot \frac{\Delta T}{\Delta x}\]</div>
+<figure class="align-default" id="q-steady-state-wall">
+<a class="reference internal image-reference" href="_images/q_steady_state_wall.png"><img alt="_images/q_steady_state_wall.png" src="_images/q_steady_state_wall.png" style="height: 250px;" /></a>
+<figcaption>
+<p><span class="caption-text">Stationärer Wärmefluss durch ein finites Wandstück. <span id="id1">[<a class="reference internal" href="References.html#id3">Hagentoft, n.d.</a>]</span></span><a class="headerlink" href="#q-steady-state-wall" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Gleichung <a class="reference internal" href="#equation-q-delta-x-eq">()</a> kann bei Grenzwertbetrachtung <span class="math notranslate nohighlight">\(\lim \limits_{\Delta x \to 0}\)</span> übergeführt werden in den
+Differentialoperator</p>
+<div class="math notranslate nohighlight" id="equation-q-dx-eq">
+<span class="eqno">()<a class="headerlink" href="#equation-q-dx-eq" title="Permalink to this equation">¶</a></span>\[ q = -\lambda \cdot \frac{d T}{d x}\]</div>
+<p>Mehrdimensional verallgemeinern lässt sich Gleichung <a class="reference internal" href="#equation-q-dx-eq">()</a> mittels des Nabla-Operators zu</p>
+<div class="math notranslate nohighlight" id="equation-q-nabla-eq">
+<span class="eqno">()<a class="headerlink" href="#equation-q-nabla-eq" title="Permalink to this equation">¶</a></span>\[ q = -\lambda \cdot \nabla T\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><span class="math notranslate nohighlight">\(\lambda\)</span> kann eine vektorielle Größe sein wodurch richtungsabhängigen Wärmeleitfähigkeiten berücksichtigt werden können.
+Falls also <span class="math notranslate nohighlight">\(\lambda_{x} \neq \lambda_{y} \neq \lambda_{z}\)</span>.</p>
+</div>
+<p>Gleichung <a class="reference internal" href="#equation-q-nabla-eq">()</a> eingesetzt in Gleichung <a class="reference internal" href="#equation-dt-eq">()</a> führt auf</p>
+<div class="math notranslate nohighlight" id="equation-dt-laplace-eq">
+<span class="eqno">()<a class="headerlink" href="#equation-dt-laplace-eq" title="Permalink to this equation">¶</a></span>\[ \frac{\partial T}{\partial t} = \frac {\lambda}{\rho c} \nabla \cdot (\nabla T) = \nabla^{2}T\]</div>
+<p>Dabei beschreibt <span class="math notranslate nohighlight">\(\nabla^{2}\)</span> den Laplace-Operator:</p>
+<div class="math notranslate nohighlight">
+\[ \nabla^{2} = \frac{\partial^{2}}{\partial x^{2}} + \frac{\partial^{2}}{\partial y^{2}} + \frac{\partial^{2}}{\partial
+z^{2}} \]</div>
+<div class="math notranslate nohighlight">
+\[ \nabla^{2}T = \frac{\partial^{2}T_{x}}{\partial x^{2}} + \frac{\partial^{2}T_{y}}{\partial y^{2}} +
+\frac{\partial^{2}T_{z}}{\partial z^{2}} \]</div>
+<p>Multiplikation der Wärmestromdichte mit der entsprechend durchströmten Fläche <span class="math notranslate nohighlight">\(A\)</span> in jm² führt auf den Wärmestrom <span class="math notranslate nohighlight">\(Q\)</span> in
+J/s.</p>
+</section>
+<section id="feuchtespeicherung-und-transport">
+<h3>Feuchtespeicherung und -transport<a class="headerlink" href="#feuchtespeicherung-und-transport" title="Permalink to this headline">¶</a></h3>
+<p>Analog zum Wärmetransport kann der Feuchtetransport durch Gleichung <a class="reference internal" href="#equation-w-eq">()</a> beschrieben werden:</p>
+<div class="math notranslate nohighlight" id="equation-w-eq">
+<span class="eqno">()<a class="headerlink" href="#equation-w-eq" title="Permalink to this equation">¶</a></span>\[ \frac{\partial w}{\partial t} = - \nabla \cdot g + m \]</div>
+<p>Hier steht <span class="math notranslate nohighlight">\(\frac{\partial w}{\partial t}\)</span> für die Veränderung des Wassergehaltes in kg/m³s, <span class="math notranslate nohighlight">\(g\)</span> für die
+Feuchtestromdichte in kg/(m²s) und m für eine Feuchtequelle in kg/(m³s). Die Feuchtestromdichte setzt sich in porösen
+Medien zusammen aus der</p>
+<ul class="simple">
+<li><p>Dampfdiffusionsstromdichte <span class="math notranslate nohighlight">\(g_{v}\)</span> und</p></li>
+<li><p>Flüssigwasserstromdichte <span class="math notranslate nohighlight">\(g_{l}\)</span>.</p></li>
+</ul>
+<div class="math notranslate nohighlight" id="equation-g-eq">
+<span class="eqno">()<a class="headerlink" href="#equation-g-eq" title="Permalink to this equation">¶</a></span>\[ g = g_{v} + g_{l} \]</div>
+<p>Wenn wir vorübergehend den Flüssigwassertransport vernachlässigen <span class="math notranslate nohighlight">\(g_{l} = 0\)</span>, was bei entsprechenden Randbedingungen
+eine <a class="reference internal" href="#randbedingungen-diffusive"><span class="std std-ref">valide Annahme</span></a> darstellt, setzt sich die Dampfdiffusionsstromdichte <span class="math notranslate nohighlight">\(g_{v}\)</span>, ähnlich
+wie der Wärmefluss <a class="reference internal" href="#equation-q-diff-conv-eq">()</a>, aus einem diffusiven und konvektiven Anteil zusammen</p>
+<div class="math notranslate nohighlight" id="equation-g-diff-conv-eq">
+<span class="eqno">()<a class="headerlink" href="#equation-g-diff-conv-eq" title="Permalink to this equation">¶</a></span>\[ g = g_{v} = g_{diff} + g_{conv} \]</div>
+<p>Bei Vernachlässigung konvektiver Phänomene können wir wiederum <span class="math notranslate nohighlight">\(g_{conv} = 0\)</span> setzen. Den noch verbleibenden Anteil der
+Feuchtstromdichte können wir in porösen Medien über das Fick’sche Gesetz beschreiben.</p>
+<figure class="align-default" id="g-steady">
+<a class="reference internal image-reference" href="_images/g_steady.png"><img alt="_images/g_steady.png" src="_images/g_steady.png" style="height: 250px;" /></a>
+<figcaption>
+<p><span class="caption-text">Feuchtestromdichte durch ein finites poröses Wandstück. <span id="id2">[<a class="reference internal" href="References.html#id3">Hagentoft, n.d.</a>]</span></span><a class="headerlink" href="#g-steady" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Dabei wird die Diffusion in ruhender Luft in Abhängigkeit gesetzt zu dem Dampfdruckgradienten <span class="math notranslate nohighlight">\(\Delta v\)</span> und einer
+Transportkonstante <span class="math notranslate nohighlight">\(\delta_{v}\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[ g = g_{diff} = \delta_{v} \cdot \frac{v - (v + \Delta v)}{\Delta x} \]</div>
+<div class="math notranslate nohighlight" id="equation-g-delta-eq">
+<span class="eqno">()<a class="headerlink" href="#equation-g-delta-eq" title="Permalink to this equation">¶</a></span>\[ g = -\delta_{v} \cdot \frac{\Delta v}{\Delta x} \]</div>
+<div class="math notranslate nohighlight" id="equation-g-delta-eq">
+<span class="eqno">()<a class="headerlink" href="#equation-g-delta-eq" title="Permalink to this equation">¶</a></span>\[ g = -\frac{D}{\mu} \cdot \frac{\Delta v}{\Delta x} \]</div>
+<p>Hierbei steht D (m²/s) für den temperaturabhängigen Diffusionskoeffizienten ruhender Luft, wobei <span class="math notranslate nohighlight">\(T\)</span> in Grad Celsius
+einzusetzen ist</p>
+<div class="math notranslate nohighlight">
+\[ D = (22.2 + 0.14 \cdot T) \cdot 10^{-6}\]</div>
+<p>und <span class="math notranslate nohighlight">\(\mu\)</span> für einen Faktor den Widerstand zu beschreiben der zu Folge des porösen Mediums besteht. Dieser Widerstand
+entsteht einerseits durch</p>
+<ul class="simple">
+<li><p>Reduktion des Vorhandenen Raumes für Diffusion und andererseits</p></li>
+<li><p>zu Folge der längeren Wege die ein Dampf-Teilchen zu Folge eines Porennetzwerkes zurücklegen muss.</p></li>
+</ul>
+<p>Analog zum Wärmefluss kann Gleichung <a class="reference internal" href="#equation-g-delta-eq">()</a> bei Grenzwertbetrachtung <span class="math notranslate nohighlight">\(\lim \limits_{\Delta x \to 0}\)</span>
+übergeführt werden in den Differentialoperator</p>
+<div class="math notranslate nohighlight" id="equation-g-dx-eq">
+<span class="eqno">()<a class="headerlink" href="#equation-g-dx-eq" title="Permalink to this equation">¶</a></span>\[ g = -\delta_{v} \cdot \frac{d v}{\Delta x} \]</div>
+<p>und mittels des Nabal-Operators mehrdimensional verallgemeinert werden zu</p>
+<div class="math notranslate nohighlight" id="equation-g-nabla-eq">
+<span class="eqno">()<a class="headerlink" href="#equation-g-nabla-eq" title="Permalink to this equation">¶</a></span>\[ g = - \delta_{v} \cdot \nabla v \]</div>
+</section>
+</section>
+<section id="numerische-losung-einer-partiellen-differentialgleichung-am-beispiel-des-temperaturfeldes">
+<h2>Numerische Lösung einer partiellen Differentialgleichung am Beispiel des Temperaturfeldes<a class="headerlink" href="#numerische-losung-einer-partiellen-differentialgleichung-am-beispiel-des-temperaturfeldes" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Die hier dargestellten Ausführungen sind ein kurzer Auszug aus <span id="id3">[<a class="reference internal" href="References.html#id9">Walther, n.d.</a>]</span>. Das Werk
+ermöglicht einen einfachen, anwendungsbezogenen Einstieg in die numerische Lösung komplexerer (z.B. zeitabhängig, ortsabhängig) bauphysikalischer Problemstellungen.</p>
+<p>Die dargebrachten einfachen Methoden der Numerik, werden für das bessere Verständnis in einem simplen Python-Code implementiert und können über Binder Interaktiv auf der HTML-Seite ausprobiert werden.</p>
+</div>
+<p>Zur numerischen Lösung partieller Differentialgleichungen müssen einerseits die Gleichungen und andererseits die Problemdomäne diskretisiert werden. Dafür gibt es unterschiedliche Ansätze:</p>
+<ul class="simple">
+<li><p>Finite Differenzen</p></li>
+<li><p>Finite Elemente</p></li>
+<li><p>Finite Volumen etc.</p></li>
+</ul>
+<p>Hier wird nur ein kurzer Überblick über die Finite Differenzen Methode gebracht und direkt auf die Wärmeleitungsgleichung angewendet.</p>
+<p>Da es sich bei der Wärmeleitungsgleichung um ein zeitabhängiges Problem handelt muss die Veränderung der Temperatur nach der Zeit <span class="math notranslate nohighlight">\(\frac{dT}{dt}\)</span> anschließend numerisch auf-integriert werden. Ansätze dafür wären:</p>
+<ul class="simple">
+<li><p>Euler-Verfahren</p></li>
+<li><p>Runge-Kutta-Verfahren</p></li>
+<li><p>Adams-Bashforth-Verfahren etc.</p></li>
+</ul>
+<p>Wir werden die algebraische Lösung der zeitlichen Ableitung mittels des Euler-Verfahrens integrieren um somit das Temperaturfeld zu lösen.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Wahl des Diskretisierungs und Integrationsverfahrens ist abhängig von der Problemstellung.</p>
+</div>
+<section id="finite-differenzen-methode">
+<h3>Finite Differenzen Methode<a class="headerlink" href="#finite-differenzen-methode" title="Permalink to this headline">¶</a></h3>
+<section id="diskretisierung-der-geometrie">
+<h4>Diskretisierung der Geometrie<a class="headerlink" href="#diskretisierung-der-geometrie" title="Permalink to this headline">¶</a></h4>
+<p>Da es numerisch nicht möglich ist kontinuierliche Probleme zu lösen muss als erster Schritt die Geometrie diskretisiert werden. Mittels der FDM (Finite Differenzen Metode) geschieht das auf die denkbar simpelste Weise. Die Problemdomände wird durch Knotenpunkte (Grid Points) diskretisiert wodurch ein Raster entsteht <code class="xref std std-numref docutils literal notranslate"><span class="pre">wl_diskret</span></code>.</p>
+<figure class="align-default" id="wl-diskret">
+<a class="reference internal image-reference" href="_images/wl_diskret.png"><img alt="_images/wl_diskret.png" src="_images/wl_diskret.png" style="height: 250px;" /></a>
+<figcaption>
+<p><span class="caption-text">Diskretisierung der geometrischen Problemdomäne.</span><a class="headerlink" href="#wl-diskret" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Jedem dieser Knotenpunkte sind die entsprechenden physikalischen Eigenschaften zugewiesen (Materialparameter, Temperaturen etc.) um alle Eingangswerte zu haben, um damit im nächsten Schritt die beschreibenden Differentialgleichungen für diese Knoten zu lösen und somit die orts- und zeitabhängige Veränderung in diesen darstellen zu können.</p>
+</section>
+<section id="diskretisierung-der-differentialgleichung">
+<h4>Diskretisierung der Differentialgleichung<a class="headerlink" href="#diskretisierung-der-differentialgleichung" title="Permalink to this headline">¶</a></h4>
+<p>Die Finite Differenzen Methode ermöglicht die Diskretisierung partieller Differentialgleichung und damit ihre Überführung in numerisch lösbare Formen. Wir betrachten für unser Beispiel einen eindimensionalen Fall (z.B einen Stab) mit konstanter Wärmeleitfähigkeit. Wenn wir <span class="math notranslate nohighlight">\(a\)</span> definieren als <span class="math notranslate nohighlight">\(a = \frac {\lambda}{\rho c}\)</span> sieht die Diffusionsgleichung für Wärmeleitung folgendermaßen aus:</p>
+<div class="math notranslate nohighlight" id="equation-temp-1d-eq">
+<span class="eqno">()<a class="headerlink" href="#equation-temp-1d-eq" title="Permalink to this equation">¶</a></span>\[ \frac{dT}{dt} = a \frac{dT}{dx^{2}}\]</div>
+<p>Für ein diskretes Element <span class="math notranslate nohighlight">\(i\)</span> führt die Darstellung mittels finiter Differenzen auf:</p>
+<div class="math notranslate nohighlight" id="equation-disk-temp-eq">
+<span class="eqno">()<a class="headerlink" href="#equation-disk-temp-eq" title="Permalink to this equation">¶</a></span>\[ \frac{T_{i}^{+} - T_{i}}{\Delta t} = a \frac{T_{i+1} -2 T_{i} + T_{i-1}}{\Delta x^{2}}\]</div>
+<p>Wenn wir als Randbedingungen <span class="math notranslate nohighlight">\(T_{(x=0)} = 0\)</span> °C und <span class="math notranslate nohighlight">\(T_{(x=L)} = 10\)</span> °C <code class="xref std std-numref docutils literal notranslate"><span class="pre">wl_diskret_RB</span></code>, Starttemperatur für das zu berechnende Feld <span class="math notranslate nohighlight">\(T_{x=1\ bis\ L-1} = 0\)</span> °C und z.B. <span class="math notranslate nohighlight">\(t = 50\)</span> Sekunden (Simulationszeitraum) wählen, können wir nun mittels der rechten Seite von Gleichung <a class="reference internal" href="#equation-disk-temp-eq">()</a> die Verändeurng der Temperatur für jeden Zeitschritt berechnen.</p>
+<figure class="align-default" id="wl-diskret-rb">
+<a class="reference internal image-reference" href="_images/wl_diskret_RB.png"><img alt="_images/wl_diskret_RB.png" src="_images/wl_diskret_RB.png" style="height: 200px;" /></a>
+<figcaption>
+<p><span class="caption-text">Äußersten Knoten für die Randbedingungen.</span><a class="headerlink" href="#wl-diskret-rb" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="zeitliche-integration-euler-verfahren">
+<h3>Zeitliche Integration - Euler-Verfahren<a class="headerlink" href="#zeitliche-integration-euler-verfahren" title="Permalink to this headline">¶</a></h3>
+<p>Nach jedem Zeitschritt muss mittels des Euler-Verfahrens aufintegriert werden. Betrachten wir die linke Seite von Gleichung <a class="reference internal" href="#equation-disk-temp-eq">()</a> können wir wiederholen, dass</p>
+<div class="math notranslate nohighlight" id="equation-time-disk-eq">
+<span class="eqno">()<a class="headerlink" href="#equation-time-disk-eq" title="Permalink to this equation">¶</a></span>\[ \frac{dT}{dt} \approx  \frac{T_{i}^{+} - T_{i}}{\Delta t} \]</div>
+<p>ist. Wir wissen weiters auch, dass die zeitliche Veränderung der Temperatur eine Funktion ist</p>
+<div class="math notranslate nohighlight" id="equation-dt-f-eq">
+<span class="eqno">()<a class="headerlink" href="#equation-dt-f-eq" title="Permalink to this equation">¶</a></span>\[ \frac{dT}{dt} = f \]</div>
+<p>Diese Funktion kennen wir <a class="reference internal" href="#equation-temp-1d-eq">()</a>. Wenn wir nun <a class="reference internal" href="#equation-dt-f-eq">()</a> in <a class="reference internal" href="#equation-time-disk-eq">()</a> einsetzen und umformen, erhalten wir folgenden Zusammenhang</p>
+<div class="math notranslate nohighlight" id="equation-dt-euler-eq">
+<span class="eqno">()<a class="headerlink" href="#equation-dt-euler-eq" title="Permalink to this equation">¶</a></span>\[ T_{i}^{+} = T_{i} + \Delta t f \]</div>
+<p>und mittels unserer Definition von <span class="math notranslate nohighlight">\(f\)</span> aus Gleichung <a class="reference internal" href="#equation-temp-1d-eq">()</a> und <a class="reference internal" href="#equation-disk-temp-eq">()</a> erhalten wir</p>
+<div class="math notranslate nohighlight" id="equation-t-disk-eq">
+<span class="eqno">()<a class="headerlink" href="#equation-t-disk-eq" title="Permalink to this equation">¶</a></span>\[ T_{i}^{+} = T_{i} + \Delta t a \frac{T_{i+1} -2 T_{i} + T_{i-1}}{\Delta x^{2}} \]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Anzahl der Knoten (Diskretisierung)</span>
+<span class="n">resolution</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="c1"># T and T+ Vektoren erstellen und mit Startwert 0 °C initialisieren</span>
+<span class="n">T_plus</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">resolution</span><span class="p">)</span>
+<span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">resolution</span><span class="p">)</span>
+
+<span class="c1"># Simulations-Zeit</span>
+<span class="n">sim_time</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">0.01</span>
+
+<span class="c1">#Geometrie und thermische Parameter</span>
+<span class="n">L</span> <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># m</span>
+<span class="n">dx</span> <span class="o">=</span> <span class="n">L</span> <span class="o">/</span> <span class="n">resolution</span>  <span class="c1">#</span>
+<span class="n">lambda_mat</span> <span class="o">=</span> <span class="mi">50</span>  <span class="c1"># W/(mK)</span>
+<span class="n">rho</span> <span class="o">=</span> <span class="mi">7850</span>  <span class="c1"># kg/m³</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mi">500</span>  <span class="c1"># J/(kgK)</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="n">lambda_mat</span> <span class="o">/</span> <span class="p">(</span><span class="n">rho</span> <span class="o">*</span> <span class="n">c</span><span class="p">)</span>
+<span class="n">Fo</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">/</span> <span class="n">dx</span> <span class="o">**</span> <span class="mi">2</span>  <span class="c1"># Fourier-Zahl</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Stabilitätskriterium</span>
+<span class="k">if</span> <span class="n">Fo</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;stability issue&quot;</span><span class="p">)</span>
+
+<span class="c1"># Zeit</span>
+<span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="n">sim_time</span><span class="p">:</span>
+    <span class="c1"># Randbedingungen bleiben gleich</span>
+    <span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">T</span><span class="p">[</span><span class="n">resolution</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="c1"># Berechnung innerhalb der Domäne</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">resolution</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="c1"># Ergebnis für neuen Zeitschritt berechnen</span>
+        <span class="n">T_plus</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">Fo</span><span class="p">)</span> <span class="o">+</span> <span class="n">Fo</span> <span class="o">*</span> <span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">T</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+
+    <span class="c1"># Altes Temperaturfeld mit soeben berechnetem überschreiben</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="n">T_plus</span>
+    <span class="c1"># Zeitschritt dazuzählen</span>
+    <span class="n">t</span> <span class="o">+=</span> <span class="n">dt</span>
+<span class="c1"># plotting</span>
+<span class="n">x_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">dx</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x Position in m&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Temperatur in °C&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_pos</span><span class="p">,</span> <span class="n">T_plus</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Diffusive_Theorie_4_0.png" src="_images/Diffusive_Theorie_4_0.png" />
+</div>
+</div>
+<p>Wenn wir ausreichend Zeitschritte rechnen und dabei die Randbedingungen nicht verändern konvergiert das Ergebnis gegen die stationäre Lösung des Problems. <code class="xref std std-numref docutils literal notranslate"><span class="pre">T_one_Side</span></code>.</p>
+<figure class="align-default" id="t-one-side">
+<a class="reference internal image-reference" href="_images/T_one_Side.gif"><img alt="_images/T_one_Side.gif" src="_images/T_one_Side.gif" style="height: 250px;" /></a>
+<figcaption>
+<p><span class="caption-text">Zeitlicher Darstellung der Entwicklung des Temperatufeldes in einem Stab mit den Randbedingungen <span class="math notranslate nohighlight">\(T_{(x=0)} = 0\)</span> °C und <span class="math notranslate nohighlight">\(T_{(x=L)} = 10\)</span> °C.</span><a class="headerlink" href="#t-one-side" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Für einen beidseitig erhitzten Stab <span class="math notranslate nohighlight">\(T_{(x=0)} = 10\)</span> °C und <span class="math notranslate nohighlight">\(T_{(x=L)} = 10\)</span> °C ist die zeitliche Entwiklung des Temperaturfeldes in <code class="xref std std-numref docutils literal notranslate"><span class="pre">T_both_sides</span></code> dargestellt.</p>
+<figure class="align-default" id="t-both-sides">
+<a class="reference internal image-reference" href="_images/T_both_sides.gif"><img alt="_images/T_both_sides.gif" src="_images/T_both_sides.gif" style="height: 250px;" /></a>
+<figcaption>
+<p><span class="caption-text">Zeitlicher Darstellung der Entwicklung des Temperatufeldes in einem Stab mit den Randbedingungen <span class="math notranslate nohighlight">\(T_{(x=0)} = 10\)</span> °C und <span class="math notranslate nohighlight">\(T_{(x=L)} = 10\)</span> °C. Nach einer ausreichenden Zeitdauer herrscht im gesamten Stab dieselbe Temperatur.</span><a class="headerlink" href="#t-both-sides" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Auf Grund der zeitlichen Variation des Wetters sind bei hygrothermischen Simulationen die Randbedingungen auch eine Funktion der Zeit.</p>
+</div>
+</section>
+</section>
+<section id="randbedingungen">
+<span id="randbedingungen-diffusive"></span><h2>Randbedingungen<a class="headerlink" href="#randbedingungen" title="Permalink to this headline">¶</a></h2>
+<p>Der Wärmeübergangswiderstand <span class="math notranslate nohighlight">\(R_{s}\)</span> in m²K/W setzt sich aus dem konvektiven <span class="math notranslate nohighlight">\(\alpha_{c}\)</span> und und radiativen
+Wärmeübergangskoeffizienten <span class="math notranslate nohighlight">\(\alpha_{r}\)</span> zusammen:</p>
+<div class="math notranslate nohighlight" id="equation-r-s-eq">
+<span class="eqno">()<a class="headerlink" href="#equation-r-s-eq" title="Permalink to this equation">¶</a></span>\[ R_{s} = \frac{1}{\alpha_{c} + \alpha_{r}}\]</div>
+<figure class="align-default" id="warme-bt">
+<a class="reference internal image-reference" href="_images/wärme_BT.png"><img alt="_images/wärme_BT.png" src="_images/wärme_BT.png" style="height: 350px;" /></a>
+</figure>
+<section id="konvektiver-warmeubergangskoeffizient">
+<h3>Konvektiver Wärmeübergangskoeffizient<a class="headerlink" href="#konvektiver-warmeubergangskoeffizient" title="Permalink to this headline">¶</a></h3>
+<p>Für Innenräume ist der konvektive Wärmeübergangskoeffizient definiert als:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Richtung des Wärmestroms</p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(\alpha_{c,i}\)</span> in /m²K</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>aufwärts</p></td>
+<td><p>5</p></td>
+</tr>
+<tr class="row-odd"><td><p>horizontal</p></td>
+<td><p>2.5</p></td>
+</tr>
+<tr class="row-even"><td><p>abwärts</p></td>
+<td><p>0.7</p></td>
+</tr>
+</tbody>
+</table>
+<p>Für Außenoberflächen ist <span class="math notranslate nohighlight">\(\alpha_{c,e}\)</span> vorrangig abhängig von der Windgeschwindigkeit v in m/s:</p>
+<div class="math notranslate nohighlight">
+\[ \alpha_{c,e} = 4 + 4 \cdot v \]</div>
+</section>
+<section id="radiativer-warmeubergangskoeffizient">
+<h3>Radiativer Wärmeübergangskoeffizient<a class="headerlink" href="#radiativer-warmeubergangskoeffizient" title="Permalink to this headline">¶</a></h3>
+<p>Der radiative Wärmeübergangskoeffizient <span class="math notranslate nohighlight">\(\alpha_{r}\)</span> berechnet sich mittels des Emissionsgrades <span class="math notranslate nohighlight">\(\epsilon\)</span>, der
+Stefan-Boltzmann-Konstante <span class="math notranslate nohighlight">\(\sigma\)</span> (<span class="math notranslate nohighlight">\(5.67 \cdot 10^{-8}\)</span> W/m²K<sup>4</sup>), der mittleren Außenoberflächentemperatur
+<span class="math notranslate nohighlight">\(T_{se}\)</span> und der mittleren Himmelstemperatur <span class="math notranslate nohighlight">\(T_{sky}\)</span> in Kelvin.</p>
+<div class="math notranslate nohighlight" id="equation-alpha-r-eq">
+<span class="eqno">()<a class="headerlink" href="#equation-alpha-r-eq" title="Permalink to this equation">¶</a></span>\[ \alpha_{r} = \epsilon \cdot 4 \cdot \sigma \cdot \left(\frac{T_{se} + T_{sky}}{2}\right)^{3} \]</div>
+<p>Für übliche Verhältnisse kann der radiative Wärmeübergangskoeffizient jedoch angenähert werden zu:</p>
+<div class="math notranslate nohighlight">
+\[ \alpha_{r} \approx 5 \cdot \epsilon \]</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Hygrothermische Bauteilsimulation und Risikoanalyse<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,839 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Numerical Methods-An Introduction &#8212; 207.014 Advanced Numerical Methods in Building Science 1 VU</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Implementation - Some general thoughts" href="Implementation_Intro.html" />
+    <link rel="prev" title="Introduction to numerical methods-An engineers point of view" href="Numerics_Motivation.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo_small.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">207.014 Advanced Numerical Methods in Building Science 1 VU</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   207.014 Advanced Numerical Methods in Building Science 1 VU
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Contents
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Motivation.html">
+   Motivation
+  </a>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="Numerics_Motivation.html">
+   Introduction to numerical methods-An engineers point of view
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Numerical Methods-An Introduction
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="Implementation_Intro.html">
+     Implementation - Some general thoughts
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="References.html">
+   Literature
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/Numerics_Intro.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/andreass0/AdvNum1_Book/master?urlpath=tree/AdvNum1_Book/Numerics_Intro.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#governing-differential-equations-and-their-meaning">
+   Governing differential equations and their “meaning”
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-word-about-the-nature-of-numerical-methods">
+   A word about the nature of numerical methods
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#discretization">
+   Discretization
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-finite-difference-method">
+   The Finite Difference Method
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-1-st-derivative">
+     Example
+     <span class="math notranslate nohighlight">
+      \(1^{st} \)
+     </span>
+     Derivative
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#numerical-integration">
+   Numerical Integration
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#explicit-methods-euler-method">
+     Explicit Methods - Euler Method
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#example-explicit-euler-method">
+       Example: Explicit Euler Method
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#implicit-methods">
+   Implicit Methods
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#implicit-euler-method">
+     Implicit Euler Method
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#example-implicit-euler-method">
+       Example: Implicit Euler Method
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Numerical Methods-An Introduction</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#governing-differential-equations-and-their-meaning">
+   Governing differential equations and their “meaning”
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-word-about-the-nature-of-numerical-methods">
+   A word about the nature of numerical methods
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#discretization">
+   Discretization
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-finite-difference-method">
+   The Finite Difference Method
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-1-st-derivative">
+     Example
+     <span class="math notranslate nohighlight">
+      \(1^{st} \)
+     </span>
+     Derivative
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#numerical-integration">
+   Numerical Integration
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#explicit-methods-euler-method">
+     Explicit Methods - Euler Method
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#example-explicit-euler-method">
+       Example: Explicit Euler Method
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#implicit-methods">
+   Implicit Methods
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#implicit-euler-method">
+     Implicit Euler Method
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#example-implicit-euler-method">
+       Example: Implicit Euler Method
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="numerical-methods-an-introduction">
+<h1>Numerical Methods-An Introduction<a class="headerlink" href="#numerical-methods-an-introduction" title="Permalink to this headline">¶</a></h1>
+<p>The following chapter should give a brief introduction into numerical methods and is especially focusing on providing an engineering perspective for these concepts. Some important concepts will be derived, but only to an extent, that the urge for consistency in a method for the engineer is satisfied and that more important underlying concepts like Error estimation and error accumulation can be understood. This starting point should give enough insight to help you continue your adventure into the world of numerical methods on your own.</p>
+<section id="governing-differential-equations-and-their-meaning">
+<h2>Governing differential equations and their “meaning”<a class="headerlink" href="#governing-differential-equations-and-their-meaning" title="Permalink to this headline">¶</a></h2>
+<p>Let’s take a look at the heat equation <a class="reference internal" href="#equation-heat-cond-eq">(1)</a>.</p>
+<div class="math notranslate nohighlight" id="equation-heat-cond-eq">
+<span class="eqno">(1)<a class="headerlink" href="#equation-heat-cond-eq" title="Permalink to this equation">¶</a></span>\[
+\frac{dT}{dt} = \nabla (\lambda \nabla T)
+\]</div>
+<p>A mathematician would refer to this as a homogenous parabolic partial differential equation. While this information can give helpful insight when we are stuck on/ or want to improve our numerical algorithm to solve a problem, we will focus more on the physical meaning of these governing differential equations. A simple but yet on the point explanations of the “meaning” of differential equations could be the following:</p>
+<blockquote>
+<div><p>“Differential equations are concepts which describe the physical behaviour we can expect of something.”</p>
+</div></blockquote>
+<p>Considering equation <a class="reference internal" href="#equation-heat-cond-eq">(1)</a> again with this perspective we could give the following interpretation:</p>
+<p><em>“In general heat will flow from a point of higher temperature to a point of lower temperature. The rate of the flux is dependent on the potential which is given by the difference in temperature. The higher the difference in the temperature in two points the higher the flux. This concept is governed by the first Nabla-Operator in <a class="reference internal" href="#equation-heat-cond-eq">(1)</a> <span class="math notranslate nohighlight">\((\lambda \nabla T)\)</span> inside the brackets. Furthermore, the change of temperature over time will be dependent on the sum of changes of this flux. This concepts is governed by the second Nabla-Operator in <a class="reference internal" href="#equation-heat-cond-eq">(1)</a> <span class="math notranslate nohighlight">\(\nabla (...)\)</span> outside the brackets.”</em></p>
+</section>
+<section id="a-word-about-the-nature-of-numerical-methods">
+<h2>A word about the nature of numerical methods<a class="headerlink" href="#a-word-about-the-nature-of-numerical-methods" title="Permalink to this headline">¶</a></h2>
+<p><span id="id1">[<a class="reference internal" href="References.html#id8" title="Suhas V Patankar. Numerical Heat Transfer and Fluid Flow. McGraw-Hill Book Company, New York, 1980.">Patankar, 1980</a>]</span> gives a helpful note about the numerical investigation of these differential equations which will be the leading credo for all our numerical investigations in this course:</p>
+<blockquote>
+<div><p>“A numerical solution of a differential equation consists of a set of numbers from which the distribution of the dependant variable <span class="math notranslate nohighlight">\(\Phi\)</span> can be constructed. In this sense, a numerical method is akin to a laboratory experiment, in which a set of instrument readings enables us to establish the distribution of the measured quantity in the domain under investigation. The numerical analyst and the laboratory experiment both must remain content with only a finite number of numerical values as the outcome, although this number can, at least in principle, be made large enough for practical purposes.” <span id="id2">[<a class="reference internal" href="References.html#id8" title="Suhas V Patankar. Numerical Heat Transfer and Fluid Flow. McGraw-Hill Book Company, New York, 1980.">Patankar, 1980</a>]</span></p>
+</div></blockquote>
+</section>
+<section id="discretization">
+<h2>Discretization<a class="headerlink" href="#discretization" title="Permalink to this headline">¶</a></h2>
+<p>To make any numerical calculations the first step that has to be taken is the discretization of the problem domain, but why? The concepts the equations we are dealing with describe are of general and therefore continuous nature.  Discretization allows us to replace the continuous information with discrete values and make these problems computable with algebraic methods.</p>
+</section>
+<section id="the-finite-difference-method">
+<h2>The Finite Difference Method<a class="headerlink" href="#the-finite-difference-method" title="Permalink to this headline">¶</a></h2>
+<p>One of these discretization methods is the Finite Differences Method. It is based on the Taylor-series expansion of a function around a certain point. It can be sufficiently explained by fairly simple mathematical methods and is very intuitive in its nature. A condensed explanation of the most important concepts will be given here, for a more detailed explanation turn to your lecture notes and textbooks like <span id="id3">[<a class="reference internal" href="References.html#id7"><em>Numerical Methods for Ordinary Differential Equations</em>, 2016</a>]</span>.</p>
+<p>Let’s consider <span class="math notranslate nohighlight">\(T\)</span>, which in our example should be an arbitrary function. If we have a discrete calculation domain like given in <a class="reference internal" href="#fdm-points"><span class="std std-numref">Fig. 1</span></a> and want to approximate the first- or second-derivative of <span class="math notranslate nohighlight">\(T\)</span> in this domain we can do this by performing a Taylor-series expansion. Since we want to derive the function for grid point 2 we will develop our Taylor-series around this point once for the grid point 1 and once for the grid point 3.</p>
+<div class="math notranslate nohighlight" id="equation-fdm-taylor-series-1">
+<span class="eqno">(2)<a class="headerlink" href="#equation-fdm-taylor-series-1" title="Permalink to this equation">¶</a></span>\[
+T_{1} = T_{2} - \frac{dT_{2}}{dx} \Delta x + \frac{1}{2} \frac{d^{2}T_{2}}{dx^{2}} \Delta x^{2} - ...
+\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight" id="equation-fdm-taylor-series-3">
+<span class="eqno">(3)<a class="headerlink" href="#equation-fdm-taylor-series-3" title="Permalink to this equation">¶</a></span>\[
+T_{3} = T_{2} + \frac{dT_{2}}{dx} \Delta x + \frac{1}{2} \frac{d^{2}T_{2}}{dx^{2}} \Delta x^{2} + ...
+\]</div>
+<p>“Truncating the series after the third term, and adding and subtracting the series from each other we obtain</p>
+<div class="math notranslate nohighlight" id="equation-fdm-1st-deriv">
+<span class="eqno">(4)<a class="headerlink" href="#equation-fdm-1st-deriv" title="Permalink to this equation">¶</a></span>\[
+\frac{dT_{2}}{dx} = \frac{T_{3} - T_{1}}{2 \Delta x} + O(\Delta x^{2})
+\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight" id="equation-fdm-2nd-deriv">
+<span class="eqno">(5)<a class="headerlink" href="#equation-fdm-2nd-deriv" title="Permalink to this equation">¶</a></span>\[
+\frac{d^{2}T_{2}}{dx^{2}} = \frac{T_{3} + T_{1} - 2T_{2}}{\Delta x^{2}} + O(\Delta x^{2})
+\]</div>
+<p>“<span id="id4">[<a class="reference internal" href="References.html#id8" title="Suhas V Patankar. Numerical Heat Transfer and Fluid Flow. McGraw-Hill Book Company, New York, 1980.">Patankar, 1980</a>]</span></p>
+<p>Since we truncated the Taylor-series we are left with a truncation error based on the remainder term. After some investigation one can find out that this error gives us the order of accuracy of the method. Both give us <span class="math notranslate nohighlight">\(O(h^{2})\)</span> as the order of accuracy. Which means that our Error is equal to the square of the chosen step size.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The order of accuracy gives us an estimation of how fast the chosen approximation converges to the exact solution
+when <span class="math notranslate nohighlight">\(h \rightarrow 0\)</span>. Therefore, usually higher orders of accuracy are better.</p>
+</div>
+<figure class="align-default" id="fdm-points">
+<a class="reference internal image-reference" href="_images/FDM_points.png"><img alt="_images/FDM_points.png" src="_images/FDM_points.png" style="height: 200px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">Three successive grid points used for Taylor-series expansion. <span id="id5">[<a class="reference internal" href="References.html#id8" title="Suhas V Patankar. Numerical Heat Transfer and Fluid Flow. McGraw-Hill Book Company, New York, 1980.">Patankar, 1980</a>]</span></span><a class="headerlink" href="#fdm-points" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<section id="example-1-st-derivative">
+<h3>Example  <span class="math notranslate nohighlight">\(1^{st} \)</span> Derivative<a class="headerlink" href="#example-1-st-derivative" title="Permalink to this headline">¶</a></h3>
+<p>The following code computes the numerical derivative of <span class="math notranslate nohighlight">\(f(x)=cos(x)\)</span> using the forward difference formula for decreasing step sizes, <span class="math notranslate nohighlight">\(h\)</span>. It then plots the maximum error between the approximated derivative and the true derivative versus ℎ as shown in the generated figure. We are also plotting Orders of accuracy and we can see that the approximation is of first order of accuracy.
+We are also using the central differences for the approximation in a different step and as expected we see that its order of accuracy increased.
+Reference code from <a class="reference external" href="https://pythonnumericalmethods.berkeley.edu/notebooks/chapter20.02-Finite-Difference-Approximating-Derivatives.html">here</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define step size</span>
+<span class="n">h</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="c1"># define number of iterations to perform</span>
+<span class="n">iterations</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="c1"># list to store our step sizes</span>
+<span class="n">step_size</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1"># list to store max error for each step size</span>
+<span class="n">max_error_forward</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">max_error_central</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iterations</span><span class="p">):</span>
+    <span class="c1"># halve the step size</span>
+    <span class="n">h</span> <span class="o">/=</span> <span class="mi">2</span>
+    <span class="c1"># store this step size</span>
+    <span class="n">step_size</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+    <span class="c1"># compute new grid</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+    <span class="c1"># compute function value at grid</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="c1"># compute vector of forward differences</span>
+    <span class="n">forward_diff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="n">h</span>
+    <span class="c1"># compute corresponding grid</span>
+    <span class="n">x_diff</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="c1"># compute exact solution</span>
+    <span class="n">exact_solution</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x_diff</span><span class="p">)</span>
+
+    <span class="c1"># Compute max error between</span>
+    <span class="c1"># numerical derivative and exact solution</span>
+    <span class="n">max_error_forward</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">exact_solution</span> <span class="o">-</span> <span class="n">forward_diff</span><span class="p">)))</span>
+
+    <span class="c1"># Central DIfferences</span>
+    <span class="c1"># Repeat the analysis for central differences</span>
+    <span class="c1"># compute vector of central differences</span>
+    <span class="n">y_plus</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+    <span class="n">y_minus</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">central_diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_plus</span> <span class="o">-</span> <span class="n">y_minus</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">h</span><span class="p">)</span>
+    <span class="c1"># compute exact solution</span>
+    <span class="n">exact_solution_central</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="c1"># Compute max error between</span>
+    <span class="c1"># numerical derivative and exact solution</span>
+    <span class="n">max_error_central</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">exact_solution_central</span> <span class="o">-</span> <span class="n">central_diff</span><span class="p">)))</span>
+
+<span class="c1"># Error Orders</span>
+<span class="n">hs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">step_size</span><span class="p">)</span>
+<span class="n">O_first</span> <span class="o">=</span> <span class="n">hs</span>
+<span class="n">O_second</span> <span class="o">=</span> <span class="n">hs</span> <span class="o">**</span> <span class="mi">2</span>
+<span class="n">O_third</span> <span class="o">=</span> <span class="n">hs</span> <span class="o">**</span> <span class="mi">3</span>
+
+<span class="c1"># produce log-log plot of max error versus step size</span>
+<span class="c1"># plt.figure(figsize = (12, 8))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span> <span class="n">max_error_forward</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Max Error forward difference&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span> <span class="n">max_error_central</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Max Error central difference&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span> <span class="n">O_first</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$O(h)$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span> <span class="n">O_second</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$O(h^</span><span class="si">{2}</span><span class="s1">)$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span> <span class="n">O_third</span><span class="p">)</span>
+
+<span class="c1"># plt.ylabel(&#39;$$&#39;)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$h$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Numerics_Intro_3_0.png" src="_images/Numerics_Intro_3_0.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="numerical-integration">
+<h2>Numerical Integration<a class="headerlink" href="#numerical-integration" title="Permalink to this headline">¶</a></h2>
+<p>The right-hand-side of equation <a class="reference internal" href="#equation-heat-cond-eq">(1)</a> can be dealt with, with the discretization methods we discussed before. Now let’s focus on the lef-hand-side. As usual, for most of the governing equations which describe the conservation of some kind of quantity, the physical concepts are defined for the changes these quantities may undergo. Like in  equation <a class="reference internal" href="#equation-heat-cond-eq">(1)</a> the right-hand-side describes how the Temperature will change over time. We are mostly interested in the evaluation of the quantity at a certain point in time. Since we are only given the definition of the derivative of the quantity we have to integrate the equation to obtain the quantity itself. Some methods, like the Finite Volume Method, base their approach in the conservation and therefore integration of the quantities. For now, we will stick with a method that can be described by the before used Taylor-series expansion, and look at the Finite Volume Method in a later chapter. We will investigate the Euler-Method in its explicit and implicit form, since this method can give us valuable insight into numerical integration methods and the governing concepts.</p>
+<section id="explicit-methods-euler-method">
+<h3>Explicit Methods - Euler Method<a class="headerlink" href="#explicit-methods-euler-method" title="Permalink to this headline">¶</a></h3>
+<p>The Explicit (or Forward) Euler Method is a numerical method for solving initial value problems. The method can be derived by different approaches, but since we already used the Taylor-series expansion, we will us it again.</p>
+<p>This time consider only the left-hand-side of <a class="reference internal" href="#equation-heat-cond-eq">(1)</a>. For simplicity, we will write this as</p>
+<div class="math notranslate nohighlight" id="equation-heat-cond-left-eq">
+<span class="eqno">(6)<a class="headerlink" href="#equation-heat-cond-left-eq" title="Permalink to this equation">¶</a></span>\[
+\frac{dT}{dt} = f
+\]</div>
+<p>with f being a known function.</p>
+<p>Assuming, we are interested in the Temperature at grid point 2 from <a class="reference internal" href="#fdm-points"><span class="std std-numref">Fig. 1</span></a> at <span class="math notranslate nohighlight">\(t = t_{i} + \Delta t\)</span>. We again develop our Taylor-series around this point, but now as a function of time. We want to obtain an approximation of the function at an arbitrary later point in time <span class="math notranslate nohighlight">\(t_{i} + \Delta t\)</span> developing our series around the last known point in time.  We assume that our time step stays the same with every iteration resulting in <span class="math notranslate nohighlight">\(t_{i} - t_{i+1} = \Delta t \)</span></p>
+<div class="math notranslate nohighlight" id="equation-taylor-exp-euler-eq">
+<span class="eqno">(7)<a class="headerlink" href="#equation-taylor-exp-euler-eq" title="Permalink to this equation">¶</a></span>\[
+T_{2}(t_{i} + \Delta t) = T_{2}(t_{i}) + \frac{dT(t_{i})}{dt} \Delta t + O(h^{2})
+\]</div>
+<p>This method has a <strong>Local Truncation Error</strong> of <span class="math notranslate nohighlight">\(O(h^{2})\)</span> but the errors accumulate with each time step till the desired solution time is reached. After some investigation one can see that the accumulated or <strong>Global Truncation Error</strong> is of <span class="math notranslate nohighlight">\(O(h)\)</span>.</p>
+<section id="example-explicit-euler-method">
+<h4>Example: Explicit Euler Method<a class="headerlink" href="#example-explicit-euler-method" title="Permalink to this headline">¶</a></h4>
+<p>The differential equation <span class="math notranslate nohighlight">\(\frac{df(t)}{dt} = e^{-t}\)</span> with initial condition <span class="math notranslate nohighlight">\(f_{0} = -1 \)</span> has the exact solution <span class="math notranslate nohighlight">\(f(t) = -e^{-t}\)</span>. Approximate the solution to this initial value problem between 0 and 1 in increments of 0.1 using the Explicit Euler Formula. Plot the difference between the approximated solution and the exact solution.</p>
+<p>Example code is taken from  <a class="reference external" href="https://pythonnumericalmethods.berkeley.edu/notebooks/chapter22.03-The-Euler-Method.html">here</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define parameters</span>
+<span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">t</span><span class="p">)</span>  <span class="c1"># ODE</span>
+<span class="n">h</span> <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># Step size</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">h</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>  <span class="c1"># Numerical grid</span>
+<span class="n">s0</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>  <span class="c1"># Initial Condition</span>
+
+<span class="c1"># Explicit Euler Method</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+<span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">s0</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">h</span> <span class="o">*</span> <span class="n">f</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="s1">&#39;bo--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Approximate&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">t</span><span class="p">),</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Exact&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Approximate and Exact Solution </span><span class="se">\</span>
+<span class="s1">for Simple ODE&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;f(t)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower right&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Numerics_Intro_5_0.png" src="_images/Numerics_Intro_5_0.png" />
+</div>
+</div>
+<p>Let’s check again the order of accuracy:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iterations</span> <span class="o">=</span> <span class="mi">20</span>
+
+<span class="c1"># Define parameters</span>
+<span class="c1"># f = lambda t, s: np.exp(-t) # ODE</span>
+<span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">t</span><span class="p">)</span>  <span class="c1"># ODE</span>
+<span class="n">h</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Step size</span>
+
+<span class="n">s0</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>  <span class="c1"># Initial Condition</span>
+<span class="c1"># lists to store our step sizes and errors</span>
+<span class="n">step_size</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">max_error</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># Explicit Euler Method</span>
+
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iterations</span><span class="p">):</span>
+    <span class="n">h</span> <span class="o">/=</span> <span class="mi">2</span>
+    <span class="n">step_size</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">h</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>  <span class="c1"># Numerical grid</span>
+    <span class="n">exact_solution</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+    <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">s0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="c1"># s[i + 1] = s[i] + h*f(t[i], s[i])</span>
+        <span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">h</span> <span class="o">*</span> <span class="n">f</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">max_error</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">exact_solution</span> <span class="o">-</span> <span class="n">s</span><span class="p">)))</span>
+
+<span class="c1"># Error Orders</span>
+<span class="n">hs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">step_size</span><span class="p">)</span>
+<span class="n">O_first</span> <span class="o">=</span> <span class="n">hs</span>
+<span class="n">O_second</span> <span class="o">=</span> <span class="n">hs</span> <span class="o">**</span> <span class="mi">2</span>
+<span class="n">O_third</span> <span class="o">=</span> <span class="n">hs</span> <span class="o">**</span> <span class="mi">3</span>
+
+<span class="c1"># Plot results</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span> <span class="n">max_error</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Max Error Euler Method&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span> <span class="n">O_first</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$O(h)$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span> <span class="n">O_second</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$O(h^</span><span class="si">{2}</span><span class="s1">)$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span> <span class="n">O_third</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$O(h^</span><span class="si">{3}</span><span class="s1">)$&#39;</span><span class="p">)</span>
+
+<span class="c1"># plt.ylabel(&#39;$$&#39;)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$h$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Numerics_Intro_7_0.png" src="_images/Numerics_Intro_7_0.png" />
+</div>
+</div>
+<p>What happens if we consider more terms of the Taylor-Expansion?
+We expect a rise in accuracy. <span class="math notranslate nohighlight">\(O(h) \rightarrow O(h^{2})\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Modified Euler Method</span>
+
+<span class="n">iterations</span> <span class="o">=</span> <span class="mi">20</span>
+
+<span class="c1"># Define parameters</span>
+<span class="c1"># Two terms of the Taylor expansion</span>
+<span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">t</span><span class="p">)</span>  <span class="c1"># ODE</span>
+<span class="n">f2</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">t</span><span class="p">)</span>  <span class="c1"># ODE</span>
+<span class="n">h</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Step size</span>
+
+<span class="n">s0</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>  <span class="c1"># Initial Condition</span>
+<span class="c1"># lists to store our step sizes and errors</span>
+<span class="n">step_size</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">max_error</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># Explicit Euler Method</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iterations</span><span class="p">):</span>
+    <span class="n">h</span> <span class="o">/=</span> <span class="mi">2</span>
+    <span class="n">step_size</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">h</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>  <span class="c1"># Numerical grid</span>
+    <span class="n">exact_solution</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+    <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">s0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="c1"># s[i + 1] = s[i] + h*f(t[i], s[i]) + 1/2 * h**2 * f2(t[i], s[i])</span>
+        <span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">h</span> <span class="o">*</span> <span class="n">f</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">h</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">f2</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">max_error</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">exact_solution</span> <span class="o">-</span> <span class="n">s</span><span class="p">)))</span>
+
+<span class="c1"># Error Orders</span>
+<span class="n">hs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">step_size</span><span class="p">)</span>
+<span class="n">O_first</span> <span class="o">=</span> <span class="n">hs</span>
+<span class="n">O_second</span> <span class="o">=</span> <span class="n">hs</span> <span class="o">**</span> <span class="mi">2</span>
+<span class="n">O_third</span> <span class="o">=</span> <span class="n">hs</span> <span class="o">**</span> <span class="mi">3</span>
+
+<span class="c1"># Plot results</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span> <span class="n">max_error</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Max Error Euler Method Quadratic&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span> <span class="n">O_first</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$O(h)$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span> <span class="n">O_second</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$O(h^</span><span class="si">{2}</span><span class="s1">)$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span> <span class="n">O_third</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$O(h^</span><span class="si">{3}</span><span class="s1">)$&#39;</span><span class="p">)</span>
+
+<span class="c1"># plt.ylabel(&#39;$$&#39;)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$h$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Numerics_Intro_9_0.png" src="_images/Numerics_Intro_9_0.png" />
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>With this we can understand what different numerical integrators try to achieve. In the same way we modified the linear Euler Method other numerical integrators try to rise the order of accuracy by eg. taking into account more terms of the Taylor-series, combining implicit and explicit schemes or approximating terms of the Taylor-series. The goal is to keep computational costs in affordable relations to the benefit of the scheme.</p>
+</div>
+</section>
+</section>
+</section>
+<section id="implicit-methods">
+<h2>Implicit Methods<a class="headerlink" href="#implicit-methods" title="Permalink to this headline">¶</a></h2>
+<p>The concept of implicit methods will also be explained with the counterpart of the Explicit Euler Method, the Implicit Euler Method. Implicit methods rely on results of the next time step to solve for the next time step. This can easily be explained, when obtaining the Euler Method with a backwards Taylor-series expansion as we will see shortly. Simplified this means that implicit methods use unknowns to solve for unknowns which is only possible with the use of iterative methods.</p>
+<section id="implicit-euler-method">
+<h3>Implicit Euler Method<a class="headerlink" href="#implicit-euler-method" title="Permalink to this headline">¶</a></h3>
+<p>This time we want to obtain an approximation of the function at a known point in time <span class="math notranslate nohighlight">\(t_{i}\)</span> by developing our series around the next unknown point in time <span class="math notranslate nohighlight">\(t_{i} + \Delta t\)</span>.</p>
+<div class="math notranslate nohighlight" id="equation-taylor-impl-euler-eq">
+<span class="eqno">(8)<a class="headerlink" href="#equation-taylor-impl-euler-eq" title="Permalink to this equation">¶</a></span>\[
+T_{2}(t_{i}) = T_{2}(t_{i} + \Delta t) - \frac{dT(t_{i} + \Delta t)}{dt} \Delta t + O(h^{2})
+\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is unconditionally stable, but may give wrong results for intermediate time steps when the time step is chosen too big. Therefore, this method is especially favourable when we are only interested in the end result of calculation, like for example when looking at stationary problems.</p>
+</div>
+<section id="example-implicit-euler-method">
+<h4>Example: Implicit Euler Method<a class="headerlink" href="#example-implicit-euler-method" title="Permalink to this headline">¶</a></h4>
+<p>The differential equation <span class="math notranslate nohighlight">\(\frac{df(t)}{dt} = e^{-t}\)</span> with initial condition <span class="math notranslate nohighlight">\(f_{0} = -1 \)</span> has the exact solution <span class="math notranslate nohighlight">\(f(t) = -e^{-t}\)</span>. Approximate the solution to this initial value problem between 0 and 1 in increments of 0.1 using the Implicit Euler Formula. Plot the difference between the approximated solution and the exact solution.</p>
+<p>Example code is taken from  <a class="reference external" href="https://pythonnumericalmethods.berkeley.edu/notebooks/chapter22.03-The-Euler-Method.html">here</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">fsolve</span>
+
+
+<span class="c1"># function for Implicit Euler Method</span>
+<span class="k">def</span> <span class="nf">f_ImplicitEuler</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">sp</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">t</span><span class="p">)</span>  <span class="c1"># ODE</span>
+    <span class="k">return</span> <span class="n">s</span> <span class="o">-</span> <span class="n">sp</span> <span class="o">-</span> <span class="n">f</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">h</span>
+
+
+<span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">t</span><span class="p">)</span>  <span class="c1"># ODE</span>
+<span class="n">h</span> <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># Step size</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">h</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>  <span class="c1"># Numerical grid</span>
+<span class="n">s0</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>  <span class="c1"># Initial Condition</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+<span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">s0</span>
+
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">s</span><span class="p">[</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">fsolve</span><span class="p">(</span><span class="n">f_ImplicitEuler</span><span class="p">,</span> <span class="n">s</span><span class="p">[</span><span class="n">n</span><span class="p">],</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">n</span><span class="p">],</span> <span class="n">h</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="s1">&#39;bo--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Approximate&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">t</span><span class="p">),</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Exact&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Approximate and Exact Solution </span><span class="se">\</span>
+<span class="s1">for Simple ODE&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;f(t)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower right&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Numerics_Intro_12_0.png" src="_images/Numerics_Intro_12_0.png" />
+</div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Different numerical integrators are better suited for certain problems. You can improve your algorithms a lot by using integrators which are built for your specifc problems. E.g. integrators which can deal better with PDEs of higher order and so on. This is where the mathematical background of the equations becomes of interest. For prototyping it is usually enough to try a couple of the most used ones and compare them in relation to execution time and pick the best performer.</p>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="Numerics_Motivation.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Introduction to numerical methods-An engineers point of view</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="Implementation_Intro.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Implementation - Some general thoughts</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By bi.wbb<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
