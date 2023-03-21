@@ -1,24 +1,11 @@
-MIT License
+All Rights Reserved
 
-Copyright (c) 2022 andreass0
+Copyright (c) 2023 TU Wien 
+Institute of Material Technology, Building Physics, and Building Ecology
+Research Unit of Building Physics
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+The AdvNum1_JP_Book is provided on an "as is" basis, without any warranty or liability, whether express, implied or otherwise, 
+regarding its use, accuracy, completeness or otherwise. The Licensee acknowledges and expressly accepts that the Licensor is 
+under no warranty obligation whatsoever; the Licensor's warranty is thus expressly excluded to the extent permitted by law.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-Please reference this repo when including information or knowledge provided here in your work
+Please reference this repo when including information or knowledge provided here in your work.
