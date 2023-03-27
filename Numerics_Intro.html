@@ -430,14 +430,14 @@ const thebe_selector_output = ".output, .cell_output"
 <p>Let’s take a look at the heat equation <a class="reference internal" href="#equation-heat-cond-eq">(1)</a>.</p>
 <div class="math notranslate nohighlight" id="equation-heat-cond-eq">
 <span class="eqno">(1)<a class="headerlink" href="#equation-heat-cond-eq" title="Permalink to this equation">¶</a></span>\[
-\rho c \frac{dT}{dt} = \nabla (\lambda \nabla T)
+\rho c \frac{dT}{dt} = \nabla \cdot (\lambda \nabla T)
 \]</div>
 <p>A mathematician would refer to this as a homogenous parabolic partial differential equation. While this information can give helpful insight when we are stuck on/ or want to improve our numerical algorithm to solve a problem, we will focus more on the physical meaning of these governing differential equations. A simple but yet on the point explanations of the “meaning” of differential equations could be the following:</p>
 <blockquote>
 <div><p>“Differential equations are concepts which describe the physical behaviour we can expect of something.”</p>
 </div></blockquote>
 <p>Considering equation <a class="reference internal" href="#equation-heat-cond-eq">(1)</a> again with this perspective we could give the following interpretation:</p>
-<p><em>“In general heat will flow from a point of higher temperature to a point of lower temperature. The rate of the flux is dependent on the potential which is given by the difference in temperature. The higher the difference in the temperature in two points the higher the flux. This concept is governed by the first Nabla-Operator in <a class="reference internal" href="#equation-heat-cond-eq">(1)</a> <span class="math notranslate nohighlight">\((\lambda \nabla T)\)</span> inside the brackets. Furthermore, the change of temperature over time will be dependent on the sum of changes of this flux. This concepts is governed by the second Nabla-Operator in <a class="reference internal" href="#equation-heat-cond-eq">(1)</a> <span class="math notranslate nohighlight">\(\nabla (...)\)</span> outside the brackets.”</em></p>
+<p><em>“In general heat will flow from a point of higher temperature to a point of lower temperature. The rate of the flux is dependent on the potential which is given by the difference in temperature. The higher the difference in the temperature in two points the higher the flux. This concept is governed by the first Nabla-Operator in <a class="reference internal" href="#equation-heat-cond-eq">(1)</a> <span class="math notranslate nohighlight">\((\lambda \nabla T)\)</span> inside the brackets. Furthermore, the change of temperature over time will be dependent on the sum of changes of this flux. This concepts is governed by the scalar product of the second Nabla-Operator with the term inside the brackets (which is the divergence) in <a class="reference internal" href="#equation-heat-cond-eq">(1)</a> <span class="math notranslate nohighlight">\(\nabla \cdot (...)\)</span>.”</em></p>
 </section>
 <section id="discretization">
 <h2>Discretization<a class="headerlink" href="#discretization" title="Permalink to this headline">¶</a></h2>
