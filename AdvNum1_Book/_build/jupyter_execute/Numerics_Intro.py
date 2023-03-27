@@ -8,7 +8,7 @@
 # Let's take a look at the heat equation {eq}`heat_cond_eq`.
 # 
 # $$
-# \rho c \frac{dT}{dt} = \nabla (\lambda \nabla T)
+# \rho c \frac{dT}{dt} = \nabla \cdot (\lambda \nabla T)
 # $$(heat_cond_eq)
 # 
 # A mathematician would refer to this as a homogenous parabolic partial differential equation. While this information can give helpful insight when we are stuck on/ or want to improve our numerical algorithm to solve a problem, we will focus more on the physical meaning of these governing differential equations. A simple but yet on the point explanations of the "meaning" of differential equations could be the following:
@@ -17,7 +17,7 @@
 # 
 # Considering equation {eq}`heat_cond_eq` again with this perspective we could give the following interpretation:
 # 
-# *"In general heat will flow from a point of higher temperature to a point of lower temperature. The rate of the flux is dependent on the potential which is given by the difference in temperature. The higher the difference in the temperature in two points the higher the flux. This concept is governed by the first Nabla-Operator in {eq}`heat_cond_eq` $(\lambda \nabla T)$ inside the brackets. Furthermore, the change of temperature over time will be dependent on the sum of changes of this flux. This concepts is governed by the second Nabla-Operator in {eq}`heat_cond_eq` $\nabla (...)$ outside the brackets."*
+# *"In general heat will flow from a point of higher temperature to a point of lower temperature. The rate of the flux is dependent on the potential which is given by the difference in temperature. The higher the difference in the temperature in two points the higher the flux. This concept is governed by the first Nabla-Operator in {eq}`heat_cond_eq` $(\lambda \nabla T)$ inside the brackets. Furthermore, the change of temperature over time will be dependent on the sum of changes of this flux. This concepts is governed by the scalar product of the second Nabla-Operator with the term inside the brackets (which is the divergence) in {eq}`heat_cond_eq` $\nabla \cdot (...)$."*
 # 
 # ## Discretization
 # To make any numerical calculations the first step that has to be taken is the discretization of the problem domain, but why? The concepts these equations describe are of general and therefore continuous nature.  Discretization allows us to replace the continuous information with discrete values and make these problems computable with algebraic methods.
