@@ -6,5 +6,6 @@ root: intro
 parts:
   - caption: Contents
     chapters:
+      - file: Implementation_Intro
       - file: ex1_ham_heat_multilayer.ipynb
       - file: References

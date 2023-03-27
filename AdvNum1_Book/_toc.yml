@@ -10,7 +10,7 @@ parts:
       - file: Numerics_Motivation
         sections:
           - file: Numerics_Intro
-          - file: Implementation_Intro
+#          - file: Implementation_Intro
       - file: RC_networks_motivation
         sections:
           - file: RC_network_ham_sim_theory
@@ -19,8 +19,8 @@ parts:
           - file: RC_network_building_sim_ex
       - file: Predictive_Algorithms_motivation
         sections:
-          - file: Predictive_Algorithms_theory
-          - file: Predictive_Algorithms_ex
+          - file: Coupled_Analysis_theory
+          - file: Coupled_Analysis_ex
       - file: Optimization_Problems_motivation
         sections:
           - file: Optimization_Problems_theory

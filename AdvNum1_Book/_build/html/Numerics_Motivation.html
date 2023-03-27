@@ -53,6 +53,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Numerical Methods-An Introduction" href="Numerics_Intro.html" />
@@ -124,11 +126,6 @@ const thebe_selector_output = ".output, .cell_output"
    <li class="toctree-l2">
     <a class="reference internal" href="Numerics_Intro.html">
      Numerical Methods-An Introduction
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="Implementation_Intro.html">
-     Implementation - Some general thoughts
     </a>
    </li>
   </ul>
@@ -236,6 +233,19 @@ const thebe_selector_output = ".output, .cell_output"
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-word-about-the-nature-of-numerical-methods">
+   A word about the nature of numerical methods
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -248,6 +258,19 @@ const thebe_selector_output = ".output, .cell_output"
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-word-about-the-nature-of-numerical-methods">
+   A word about the nature of numerical methods
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -256,6 +279,19 @@ const thebe_selector_output = ".output, .cell_output"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-numerical-methods-an-engineers-point-of-view">
 <h1>Introduction to numerical methods-An engineers point of view<a class="headerlink" href="#introduction-to-numerical-methods-an-engineers-point-of-view" title="Permalink to this headline">¶</a></h1>
+<section id="a-word-about-the-nature-of-numerical-methods">
+<h2>A word about the nature of numerical methods<a class="headerlink" href="#a-word-about-the-nature-of-numerical-methods" title="Permalink to this headline">¶</a></h2>
+<p><span id="id1">[<a class="reference internal" href="References.html#id9" title="Suhas V Patankar. Numerical Heat Transfer and Fluid Flow. McGraw-Hill Book Company, New York, 1980.">Patankar, 1980</a>]</span> gives a helpful note about the numerical investigation of these differential
+equations which will be the leading credo for all our numerical investigations in this course:</p>
+<blockquote>
+<div><p>“A numerical solution of a differential equation consists of a set of numbers from which the distribution of the
+dependant variable <span class="math notranslate nohighlight">\(\Phi\)</span> can be constructed. In this sense, a numerical method is akin to a laboratory experiment, in
+which a set of instrument readings enables us to establish the distribution of the measured quantity in the domain under
+investigation. The numerical analyst and the laboratory experiment both must remain content with only a finite number of
+numerical values as the outcome, although this number can, at least in principle, be made large enough for practical
+purposes.” <span id="id2">[<a class="reference internal" href="References.html#id9" title="Suhas V Patankar. Numerical Heat Transfer and Fluid Flow. McGraw-Hill Book Company, New York, 1980.">Patankar, 1980</a>]</span></p>
+</div></blockquote>
+</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -306,7 +342,7 @@ const thebe_selector_output = ".output, .cell_output"
     <footer class="footer">
   <p>
     
-      By bi.wbb<br/>
+      By Thomas Bednar, Andreas Sarkany<br/>
     
         &copy; Copyright 2021.<br/>
   </p>

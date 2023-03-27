@@ -8,7 +8,7 @@
 # Let's take a look at the heat equation {eq}`heat_cond_eq`.
 # 
 # $$
-# \frac{dT}{dt} = \nabla (\lambda \nabla T)
+# \rho c \frac{dT}{dt} = \nabla (\lambda \nabla T)
 # $$(heat_cond_eq)
 # 
 # A mathematician would refer to this as a homogenous parabolic partial differential equation. While this information can give helpful insight when we are stuck on/ or want to improve our numerical algorithm to solve a problem, we will focus more on the physical meaning of these governing differential equations. A simple but yet on the point explanations of the "meaning" of differential equations could be the following:
@@ -19,14 +19,8 @@
 # 
 # *"In general heat will flow from a point of higher temperature to a point of lower temperature. The rate of the flux is dependent on the potential which is given by the difference in temperature. The higher the difference in the temperature in two points the higher the flux. This concept is governed by the first Nabla-Operator in {eq}`heat_cond_eq` $(\lambda \nabla T)$ inside the brackets. Furthermore, the change of temperature over time will be dependent on the sum of changes of this flux. This concepts is governed by the second Nabla-Operator in {eq}`heat_cond_eq` $\nabla (...)$ outside the brackets."*
 # 
-# ## A word about the nature of numerical methods
-# 
-# {cite}`patankarNumericalHeatTransfer1980` gives a helpful note about the numerical investigation of these differential equations which will be the leading credo for all our numerical investigations in this course:
-# 
-# > "A numerical solution of a differential equation consists of a set of numbers from which the distribution of the dependant variable $\Phi$ can be constructed. In this sense, a numerical method is akin to a laboratory experiment, in which a set of instrument readings enables us to establish the distribution of the measured quantity in the domain under investigation. The numerical analyst and the laboratory experiment both must remain content with only a finite number of numerical values as the outcome, although this number can, at least in principle, be made large enough for practical purposes." {cite}`patankarNumericalHeatTransfer1980`
-# 
 # ## Discretization
-# To make any numerical calculations the first step that has to be taken is the discretization of the problem domain, but why? The concepts the equations we are dealing with describe are of general and therefore continuous nature.  Discretization allows us to replace the continuous information with discrete values and make these problems computable with algebraic methods.
+# To make any numerical calculations the first step that has to be taken is the discretization of the problem domain, but why? The concepts these equations describe are of general and therefore continuous nature.  Discretization allows us to replace the continuous information with discrete values and make these problems computable with algebraic methods.
 # 
 # ## The Finite Difference Method
 # One of these discretization methods is the Finite Differences Method. It is based on the Taylor-series expansion of a function around a certain point. It can be sufficiently explained by fairly simple mathematical methods and is very intuitive in its nature. A condensed explanation of the most important concepts will be given here, for a more detailed explanation turn to your lecture notes and textbooks like {cite}`butcherNumericalMethodsOrdinary2016`.
@@ -66,7 +60,7 @@
 # 
 # ```{figure} img/Intro_Numerics/FDM_points.png
 # ---
-# height: 200px
+# height: 150px
 # name: FDM_points
 # ---
 # Three successive grid points used for Taylor-series expansion. {cite}`patankarNumericalHeatTransfer1980`
@@ -164,7 +158,7 @@ plt.show()
 # 
 # with f being a known function.
 # 
-# Assuming, we are interested in the Temperature at grid point 2 from {numref}`FDM_points` at $t = t_{i} + \Delta t$. We again develop our Taylor-series around this point, but now as a function of time. We want to obtain an approximation of the function at an arbitrary later point in time $t_{i} + \Delta t$ developing our series around the last known point in time.  We assume that our time step stays the same with every iteration resulting in $t_{i} - t_{i+1} = \Delta t $
+# Assuming, we are interested in the Temperature at grid point 2 from {numref}`FDM_points` at $t = t_{i} + \Delta t$. We again develop our Taylor-series around this point, but now as a function of time. We want to obtain an approximation of the function at an arbitrary later point in time $t_{i} + \Delta t$ developing our series around the last known point in time.  We assume that our time step-size stays the same with every iteration resulting in $t_{i} - t_{i+1} = \Delta t $
 # 
 # $$
 # T_{2}(t_{i} + \Delta t) = T_{2}(t_{i}) + \frac{dT(t_{i})}{dt} \Delta t + O(h^{2})
@@ -303,6 +297,7 @@ plt.loglog(hs, O_third, label='$O(h^{3})$')
 # plt.ylabel('$$')
 plt.xlabel('$h$')
 plt.legend()
+plt.tight_layout()
 plt.show()
 
 
@@ -359,6 +354,7 @@ plt.xlabel('t')
 plt.ylabel('f(t)')
 plt.grid()
 plt.legend(loc='lower right')
+plt.tight_layout()
 plt.show()
 
 
@@ -367,7 +363,7 @@ plt.show()
 # ```
 
 # ## Building Matrices for our operators
-# We will focus on creating linear equation systems to solve our discretized PDEs. The main reason for this is that we want to take advantage of already implemented solvers and many of them are well optimized to solve LES. As an example it should be shown how to use a matrix to create the Laplace-Operator when trying to solve the Laplace Equation {eq}`laplace_eq`numerically and build an LES.
+# We will focus on creating linear equation systems to solve our discretized PDEs. The main reason for this is that we want to take advantage of already implemented solvers and many of them are well optimized to solve LES. As an example it should be shown how to use a matrix to create the Laplace-Operator when trying to solve the Laplace Equation {eq}`laplace_eq` numerically and build an LES.
 # 
 # $$
 # \Delta \Phi = 0
@@ -388,15 +384,16 @@ plt.show()
 # Now we know, that we can discretize this equation using finite differences. Consider a discretized problem domain $\Omega (0,1)$, where $n$ denotes the current grid point and $n-1$ or respectively $n+1$ the immediate neighbour.
 # 
 # $$
-# \frac{\Phi_{n+1} - 2 \Phi{n} + \Phi{n-1}}{\Delta x{2}} = 0
+# \frac{\Phi_{n+1} - 2 \Phi_{n} + \Phi_{n-1}}{\Delta x{2}} = 0
 # $$(laplace_fdm_eq)
 # 
-# When creating the linear equations system of the shape
+# When creating the linear equations system for {eq}`laplace_fdm_eq` of the shape
+# 
 # $$
 # Ax = b
 # $$
 # 
-# in this case $A$ will be a depiction of our Laplace operator. After some investigation of {eq}`laplace_fdm_eq`we can see that we could write this for all equations as
+# , $A$ will be a depiction of our Laplace operator. After some investigation of {eq}`laplace_fdm_eq` we can see that we could write this for all equations as
 # 
 # $$ A = \frac{1}{\Delta x^{2}}
 #  \begin{bmatrix}
@@ -409,6 +406,10 @@ plt.show()
 #                 &  &  (...) &    0  & 1 & -2 \\
 # \end{bmatrix}
 # $$
+# 
+# ```{note}
+# This is a typical way to write the Laplace-Operator $\Delta$ in matrix-form.
+# ```
 # 
 # Let's choose a discretization of $n = 100$ points for our calculation. This leads to an unknown solution vector for $\Phi$ with $n$ entries.
 # 
@@ -426,7 +427,33 @@ plt.show()
 # 
 # Furthermore, assume that we have some known value of $\Phi_{17} = 10$ given to us as a boundary condition.
 # 
-# We want to put all our known values in the $b$ vector. Since we know $\Phi_{17}$ we put it in our $b$ vector. This means subtracting it from $A$ to put it on the other side of the equation.
+# We want to put all our known values in the $b$ vector. Since we know $\Phi_{17}$ we put it in our $b$ vector. For this we will look at the numierical formulation of {eq}`laplace_fdm_eq` for the grid point $17$.
+# 
+# $$
+# \frac{\Phi_{18} - 2 \Phi_{17} + \Phi{16}}{\Delta x{2}} = 0
+# $$
+# 
+# It is often easier to write the coefficients for A. For the row $17$ the coefficients would be in NumPy-index notation
+# 
+# $$
+# A_{17, 16} = 1 \\
+# A_{17, 17} = -2 \\
+# A_{17, 18} = 1 \\
+# $$
+# 
+# Inserting into the numerical formulation for grid-point $17$ gives
+# 
+# $$
+# \frac{A_{17, 18} \cdot \Phi_{18} - A_{17, 17} \cdot \Phi{17} + A_{17, 16} \cdot \Phi_{16}}{\Delta x{2}} = 0
+# $$
+# 
+# Now we can reshape the equation so that the known value is on the RHS
+# 
+# $$
+# \frac{A_{17, 18} \cdot \Phi_{17, 18} + A_{16} \cdot \Phi_{17, 16}}{\Delta x{2}} = A_{17} \cdot \Phi_{17}
+# $$
+# 
+# remembering that $\Phi_{n}$ are our unknowns $x_{n}$, this yields in the entry for $b_{n}$ in NumPy-index notations as
 # 
 # $$
 # b_{17} = - A_{17,17} \cdot x_{17}
@@ -435,15 +462,39 @@ plt.show()
 # In[7]:
 
 
-n = 100   #number of unkowns
+n = 100   # Discretization points
 L = 1
-dx = 1/100
+dx = 1/n
 phi = np.zeros(n)
+phi_bc = 10     # point 17 is given, in np indexing
+bc_index = 17
+phi[bc_index] = 0     # for explanation. Initialized with zeros, so in this case not necessary
+
 A = np.eye(n,n,k=-1)*1 + np.eye(n,n)*-2 + np.eye(n,n,k=1)*1
 A = A / dx **2
-b = np.zeros(n)
-b[17] = -10 / dx **2
 
+# Calculating b-vector/ Vector of known values
+b = np.zeros(n)
+b[bc_index] = 2 * phi_bc / dx **2
+
+
+A[bc_index,bc_index] = 0        # Setting A entry zero
+
+# Solving Ax=b for x
 phi = np.linalg.solve(A, b)
-plt.plot(phi)
+
+
+fig, (ax,ax2) = plt.subplots(nrows=2, sharex=True)
+x = np.arange(0, 1, dx)
+extent = [x[0]-(x[1]-x[0])/2., x[-1]+(x[1]-x[0])/2.,0,1]
+ax.imshow(phi[np.newaxis,:], cmap="jet", aspect="auto", extent=extent)
+ax.set_yticks([])
+ax.set_xlim(extent[0], extent[1])
+
+ax2.plot(x,phi, '.')
+
+plt.xlabel('$\Omega(0, 1)$')
+plt.ylabel('$\Phi$')
+plt.tight_layout()
+plt.show()
 
