@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Here the exercises the students are solving in this course are summarized and explained. This script should
+In this book the exercises the students are solving in this course are summarized and explained. This script should
 accompany your lecture and help you understand the theoretical concepts with interactive code. Feel
 free to either download the source files or start up a binder to execute the code directly without an IDE.
 
