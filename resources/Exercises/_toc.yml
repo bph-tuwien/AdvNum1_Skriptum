@@ -8,4 +8,5 @@ parts:
     chapters:
       - file: Implementation_Intro
       - file: ex1_ham_heat_multilayer.ipynb
+      - file: ex2_rc_networks_conveductance.ipynb
       - file: References
