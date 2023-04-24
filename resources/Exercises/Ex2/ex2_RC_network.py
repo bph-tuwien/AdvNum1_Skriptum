@@ -1,6 +1,5 @@
 import numpy as np
-from numpy.linalg import inv
-from scipy.integrate import solve_ivp
+from numpy.linalg import inv, solve
 
 
 # -----------------------------
@@ -148,22 +147,22 @@ if __name__ == '__main__':
     # TODO: Check if this can be done smarter
     for index, node in enumerate(Node_List):
         main_diag_k[index] = np.sum([K.K_value for K in node.K])
-    K_Array = np.eye(unknowns, unknowns) * -main_diag_k
+    Kt_Array = np.eye(unknowns, unknowns) * -main_diag_k
 
-    for index, elem in np.ndenumerate(K_Array):
+    for index, elem in np.ndenumerate(Kt_Array):
         i = index[0]  # Row index
         j = index[1]  # Column index
         str_index = str(i + 1) + str(j + 1)
         if str_index in K_value_dict.keys():
-            # K_Array[i, j] = K_value_dict[str_index]
-            K_Array[j, i] = K_value_dict[str_index]  # Symmetrical Matrix
+            # Kt_Array[i, j] = K_value_dict[str_index]
+            Kt_Array[j, i] = K_value_dict[str_index]  # Symmetrical Matrix
 
     # Boundary Conductivity Matrix
     num_bc_nodes = BC_Node_List.__len__()
     num_k_bc = K_BC_List.__len__()
     K_BC_Array = np.zeros((unknowns, num_bc_nodes), dtype=object)
     K_BC_Array[:] = [K for K in K_BC_List]
-    K_value_BC_Array = np.zeros((unknowns, num_bc_nodes), dtype=object)
+    K_value_BC_Array = np.zeros((unknowns, num_bc_nodes))
     K_value_BC_Array[:] = [K.K_value for K in K_BC_List]
 
     K_BC_Adjacency = np.zeros((unknowns, num_bc_nodes))
@@ -184,8 +183,8 @@ if __name__ == '__main__':
 
     # Calculation
     print('Solving Stationary Calculation')
-    # T = -inv(np.transpose(K_Array)) @ Io
-    T = -inv(K_Array) @ Io
+    # T = -inv(Kt_Array) @ Io
+    T = solve(Kt_Array, -Io)
 
     print(f'The temperature vector is: {T} ')
     print('End of Stationary Calculation')
