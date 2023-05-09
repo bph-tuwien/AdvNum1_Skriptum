@@ -37,7 +37,7 @@ class Boundary_Cell(object):
         self.Tn = kwargs.get('Tn', None)
         self.Tn_plus = kwargs.get('Tn_plus', None)
 
-        self.RC = kwargs.get('RC', None)
+        self.RC = kwargs.get('RC_T', None)
 
         # Neighbours
         # No neighbours. This is the end of the sim domain
@@ -100,7 +100,7 @@ if __name__ == '__main__':
     Tn_plus = np.array([cell.Tn_plus for cell in whole_domain])
     # get interface indices
     interface_indices = [layer.__len__() for layer in layers]  # here the ghost cells are missing.
-    RC_array = np.array([cell.RC for cell in whole_domain])
+    RC_array = np.array([cell.RC_T for cell in whole_domain])
     RC_W = RC_array[0:-2]
     RC_P = RC_array[1:-1]
     RC_E = RC_array[2:]
