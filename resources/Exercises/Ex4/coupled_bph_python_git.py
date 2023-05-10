@@ -107,6 +107,9 @@ def fc_coupled_HAM(vec_Tpvp, vec_Tpv, K, Fo, Fow, dt, rho, Cp, Cm, Lv):
     # explicit and implicit parts for T
     exp_T = 0.5 * (Fo * np.dot(K, T) + Lv * Fow / (rho * Cp) * np.dot(K, pv))
     imp_T = 0.5 * (Fo * np.dot(K, Tp) + Lv * Fow / (rho * Cp) * np.dot(K, pvp))
+
+    # exp_T = 0.5 * (Fo * np.dot(K, T))
+    # imp_T = 0.5 * (Fo * np.dot(K, Tp))
     T_term = -Tp + T + exp_T + imp_T
     # explicit and implicit parts for pv
     exp_pv = 0.5 * (Fow / Cm * np.dot(K, pv))
@@ -153,8 +156,8 @@ pvleft = 1200
 Tright = Tleft
 pvright = pvleft
 # initial conditions
-pv_init = np.ones(n) * 1300
-T_init = np.ones(n) * 15
+pv_init = np.ones(n) * 1000
+T_init = np.ones(n) * 20
 pv = pv_init
 T = T_init
 phi = pv / fc_pvsat(T) * 100
@@ -172,8 +175,10 @@ while t <= sim_time:
     # update boundary conditions
     T[0] = Tleft
     T[-1] = Tleft + 20
+    T[-1] = Tleft
     pv[0] = pvleft
     pv[-1] = pvleft + 300
+    pv[-1] = pvleft
 
     # solve the coupled, non-linear system
     result_array = fsolve(fc_coupled_HAM,
@@ -214,19 +219,34 @@ stop = int(len(store_phi))
 start = 0
 ############################################################
 ##############################
-plt.subplot(121)
-plt.xlabel("x position [m]")
-plt.ylabel(r"$\varphi$ [%]")
-plt.plot(x_pos, phi_init[1:-1], '--', color=coule[1], alpha=0.5)
-for i in range(start, stop):
-    plt.plot(x_pos, store_phi[i], '-', color=coule[1], alpha=0.35)
 
-plt.subplot(122)
-plt.xlabel("x position [m]")
-plt.ylabel("water content [g/m$^3$]")
-plt.plot(x_pos, w_init[1:-1] * 1000, '--', color=coule[3], alpha=0.5)
+fig, axs = plt.subplots(2, 2)
+axs[0, 0].set_xlabel("x position [m]")
+axs[0, 0].set_ylabel(r"$\varphi$ [%]")
+axs[0, 0].plot(x_pos, phi_init[1:-1], '--', color=coule[1], alpha=0.5)
 for i in range(start, stop):
-    plt.plot(x_pos, store_w[i], '-', color=coule[3], alpha=0.15)
+    axs[0, 0].plot(x_pos, store_phi[i], '-', color=coule[1], alpha=0.35)
+
+# plt.subplot(122)
+axs[0, 1].set_xlabel("x position [m]")
+axs[0, 1].set_ylabel("water content [g/m$^3$]")
+axs[0, 1].plot(x_pos, w_init[1:-1] * 1000, '--', color=coule[3], alpha=0.5)
+for i in range(start, stop):
+    axs[0, 1].plot(x_pos, store_w[i], '-', color=coule[3], alpha=0.15)
+
+# plt.subplot(231)
+axs[1, 0].set_xlabel("x position [m]")
+axs[1, 0].set_ylabel('Temperature [°C]')
+axs[1, 0].plot(x_pos, T_init[1:-1], '--', color=coule[1], alpha=0.5)
+for i in range(start, stop):
+    axs[1, 0].plot(x_pos, store_T[i], '-', color=coule[1], alpha=0.35)
+
+# plt.subplot(232)
+axs[1, 1].set_xlabel("x position [m]")
+axs[1, 1].set_ylabel("Vapour Pressure [Pa]")
+axs[1, 1].plot(x_pos, pv_init[1:-1], '--', color=coule[3], alpha=0.5)
+for i in range(start, stop):
+    axs[1, 1].plot(x_pos, store_pv[i], '-', color=coule[3], alpha=0.15)
 
 plt.tight_layout()
 plt.savefig("./graph_duo_phi_w.pdf")
