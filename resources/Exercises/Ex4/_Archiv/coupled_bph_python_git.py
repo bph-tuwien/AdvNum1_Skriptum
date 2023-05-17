@@ -107,7 +107,7 @@ def fc_coupled_HAM(vec_Tpvp, vec_Tpv, K, Fo, Fow, dt, rho, Cp, Cm, Lv):
     # explicit and implicit parts for T
     exp_T = 0.5 * (Fo * np.dot(K, T) + Lv * Fow / (rho * Cp) * np.dot(K, pv))
     imp_T = 0.5 * (Fo * np.dot(K, Tp) + Lv * Fow / (rho * Cp) * np.dot(K, pvp))
-
+    #
     # exp_T = 0.5 * (Fo * np.dot(K, T))
     # imp_T = 0.5 * (Fo * np.dot(K, Tp))
     T_term = -Tp + T + exp_T + imp_T
@@ -116,6 +116,9 @@ def fc_coupled_HAM(vec_Tpvp, vec_Tpv, K, Fo, Fow, dt, rho, Cp, Cm, Lv):
     imp_pv = 0.5 * (Fow / Cm * np.dot(K, pvp))
     pv_term = -pvp + pv + exp_pv + imp_pv
     # send back as one array
+    # print(T_term)
+    # print(pv_term)
+
     return np.hstack([T_term, pv_term])
 
 
@@ -174,11 +177,15 @@ pbar = tqdm(total=sim_time)  # set up a progress par
 while t <= sim_time:
     # update boundary conditions
     T[0] = Tleft
-    T[-1] = Tleft + 20
+    # T[-1] = Tleft + 20
     T[-1] = Tleft
     pv[0] = pvleft
-    pv[-1] = pvleft + 300
+    # pv[-1] = pvleft + 300
     pv[-1] = pvleft
+
+    # Cm = update_Cm(w, phi, T)
+    # Fo = update_Fo(w, k, rho, Cp, dt, dx)
+    # Fow = update_Fow(w, dt, dx)
 
     # solve the coupled, non-linear system
     result_array = fsolve(fc_coupled_HAM,

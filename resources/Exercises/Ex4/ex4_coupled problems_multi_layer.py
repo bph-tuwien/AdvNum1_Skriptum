@@ -2,6 +2,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.optimize import fsolve
+from scipy.integrate import solve_ivp
 import matplotlib as mpl
 
 # mpl.use('Qt5Agg')  # interactive mode works with this, pick one
@@ -33,7 +34,8 @@ class Cell_Mat(object):
 
         # Coupled parameters
         self._lambda_w = kwargs.get('lambda_w', None)
-        self._mu_w = kwargs.get('mu_w', None)
+        self._delta_v_w = kwargs.get('delta_v_w',
+                                     None)  # we give mu as an input but calculate with the water dependant permeability
         self._cm = kwargs.get('cm', None)
         self._cp_w = kwargs.get('cp_w', None)
 
@@ -41,9 +43,9 @@ class Cell_Mat(object):
         self.Tn = kwargs.get('Tn', None)
         self.Tn_plus = kwargs.get('Tn_plus', None)
         self.dT = kwargs.get('dT', None)
-        self.pv = kwargs.get('pv', None)  # value for pv in Pascal
+        self._pv = kwargs.get('pv', None)  # value for pv in Pascal
         self._w = kwargs.get('w', None)  # value for w in kg/m³
-        self._phi = kwargs.get('phi', None)  # value for w in kg/m³
+        self.phi = kwargs.get('phi', None)  # value for w in kg/m³
         self._psat = kwargs.get('psat', None)  # value for w in kg/m³
 
         # Neighbours
@@ -54,6 +56,14 @@ class Cell_Mat(object):
         self._RC_T = kwargs.get('RC_T', None)
         self._RC_mu = kwargs.get('RC_mu', None)
 
+    @property
+    def pv(self):
+        self.pv = self.psat * self.phi / 100
+        return self._pv
+
+    @pv.setter
+    def pv(self, value):
+        self._pv = value
 
     @property
     def psat(self):
@@ -63,7 +73,6 @@ class Cell_Mat(object):
     @psat.setter
     def psat(self, value):
         self._psat = value
-
 
     @property
     def RC_T(self):
@@ -76,30 +85,30 @@ class Cell_Mat(object):
 
     @property
     def RC_mu(self):
-        self.RC_mu = self.dx / self.mu_w
+        self.RC_mu = self.dx / self.delta_v_w
         return self._RC_mu
 
     @RC_mu.setter
     def RC_mu(self, value):
         self._RC_mu = value
 
-    @property
-    def w(self):
-        self.w = self.fc_w_phi(self.phi)
-        return self._w
+    # @property
+    # def w(self):
+    #     self.w = self.fc_w_phi(self.phi)
+    #     return self._w
+    #
+    # @w.setter
+    # def w(self, value):
+    #     self._w = value
 
-    @w.setter
-    def w(self, value):
-        self._w = value
-
-    @property
-    def phi(self):
-        self.phi = self.pv / self.fc_pvsat(self.Tn) * 100
-        return self._phi
-
-    @phi.setter
-    def phi(self, value):
-        self._phi = value
+    # @property
+    # def phi(self):
+    #     self.phi = self.pv / self.fc_pvsat(self.Tn) * 100
+    #     return self._phi
+    #
+    # @phi.setter
+    # def phi(self, value):
+    #     self._phi = value
 
     @property
     def cm(self):
@@ -120,13 +129,13 @@ class Cell_Mat(object):
         self._lambda_w = value
 
     @property
-    def mu_w(self):
-        self.mu_w = self.fc_deltav(self.w)
-        return self._mu_w
+    def delta_v_w(self):
+        self.delta_v_w = self.fc_deltav(self.w)
+        return self._delta_v_w
 
-    @mu_w.setter
-    def mu_w(self, value):
-        self._mu_w = value
+    @delta_v_w.setter
+    def delta_v_w(self, value):
+        self._delta_v_w = value
 
     @property
     def cp_w(self):
@@ -147,7 +156,9 @@ class Cell_Mat(object):
     def fc_deltav(self, w):
         # a = 1.1 * 1e-7
         # b = -1.57 * 1e-7
-        return self.mu + self.kw_mu * w
+        # delta_p_0 = 1.5 * 1e-6  # 1/1.5 * 1e6# Permeability of water vapour in air
+        delta_p_0 = (22.2 + 0.14 * self.Tn) * 1e-6      # Permeability of water vapour in air in m²/s
+        return delta_p_0 / self.mu + self.kw_mu * w
 
     # thermal conductivity depending on water content
     def fc_lambda(self, w):
@@ -157,36 +168,36 @@ class Cell_Mat(object):
 
     # TODO: Adjust for each material
     # sorption curve
-    def fc_w_phi(self, phi):
+    def fc_w_phi(self):
         a = 700  # 1000
         b = 250 * 1e-6  # 146*1e-6
         c = 2.9  # 1.59
-        res = a / np.power(1 - np.log(phi / 100) / b, 1 / c)
+        res = a / np.power(1 - np.log(self.phi / 100) / b, 1 / c)
         return res * 1e-3
 
     # sortpion curve the other way around
-    def fc_phi_w(self, w):
+    def fc_phi_w(self):
         a = 700  # 1000
         b = 250 * 1e-6  # 146*1e-6
         c = 2.9  # 1.59
         # phi = np.zeros(len(w))
-        phi = np.exp(b * (1 - np.power((a / (1000 * w)), c))) * 100
+        phi = np.exp(b * (1 - np.power((a / (1000 * self.w)), c))) * 100
         return phi
 
     def update_cp_w(self):
         cp_w = self.cp + self.w / self.rho
         return cp_w
 
-    def update_Cm(self, w, phi, T):
-        # epsilon = 0.001 * np.min(w)
-        epsilon = 0.001 * w
-        wp = w + epsilon
-        phip = self.fc_phi_w(wp)
-        dw = abs(wp - w)
-        dphi = abs(phip - phi) / 100
-        pvs = self.fc_pvsat(T)
-        Cm = dw / dphi / pvs
-        return Cm
+    # def update_Cm(self, w, phi, T):
+    #     # epsilon = 0.001 * np.min(w)
+    #     epsilon = 0.001 * w
+    #     wp = w + epsilon
+    #     phip = self.fc_phi_w(wp)
+    #     dw = abs(wp - w)
+    #     dphi = abs(phip - phi) / 100
+    #     pvs = self.fc_pvsat(T)
+    #     Cm = dw / dphi / pvs
+    #     return Cm
 
 
 class Boundary_Cell(object):
@@ -194,10 +205,69 @@ class Boundary_Cell(object):
         # Fields
         self.Tn = kwargs.get('Tn', None)
         self.Tn_plus = kwargs.get('Tn_plus', None)
-        self.pv = kwargs.get('pv', None)  # Vapour pressure in Pascal
+        self.phi = kwargs.get('phi', None)  # Phi in %
+        self._pv = kwargs.get('pv', None)
 
         self.RC_T = kwargs.get('RC_T', None)
-        self.RC_mu = kwargs.get('RC_mu', None)
+        self._RC_mu = kwargs.get('RC_mu', None)
+
+        self._psat = kwargs.get('psat', None)
+        self._w = kwargs.get('w', None)
+
+    @property
+    def psat(self):
+        if self._psat is None:
+            self.psat = self.fc_pvsat(self.Tn)
+        return self._psat
+
+    @psat.setter
+    def psat(self, value):
+        self._psat = value
+
+    @property
+    def pv(self):
+        if self._pv is None:
+            self.pv = self.phi / 100 * self.psat
+        return self._pv
+
+    @pv.setter
+    def pv(self, value):
+        self._pv = value
+
+    @property
+    def w(self):
+        if self._w is None:
+            self.w = self.fc_abs_hum(self.phi, self.Tn)
+        return self._w
+
+    @w.setter
+    def w(self, value):
+        self._w = value
+
+    def fc_abs_hum(self, phi, T):
+        res = (6.112 * np.exp((17.67 * T) / (T + 243.5)) * phi * 2.1674) / \
+              (273.15 + T) * 1 / 1000
+        return res
+
+    @property
+    def RC_mu(self):
+        if self._RC_mu is None:
+            alpha_c = 1 / self.RC_T - 5  # 5 is an approximation for the radiative heat transfer coefficient
+            rho_a = 1.25  # kg/m3 air density
+            c_pa = 1000  # J/kgK specific heat capacity of air
+            self.RC_mu = alpha_c / (rho_a * c_pa)
+        return self._RC_mu
+
+    @RC_mu.setter
+    def RC_mu(self, value):
+        self._RC_mu = value
+
+    def fc_pvsat(self, T):
+        return np.power(10, 7.625 * T / (241 + T) + 2.7877)
+
+    def fc_phi_w(self):
+        R_w = 461.5  # J/kgK gas constant for water vapour
+        return (self.w * 100 * (self.Tn+273.15) * R_w) / (self.psat)
 
         # Neighbours
         # No neighbours. This is the end of the sim domain
@@ -206,68 +276,8 @@ class Boundary_Cell(object):
 # ############################################################
 
 
-# %% md
-## Input data
-# Here we create our input data for our calculation:
-# %%
-# ----------------------------------
-# Define simulation domain
-# ----------------------------------
-
-# Define Simulation parameters
-time_in_hours = 144 / 60  # in hours
-sim_time = 3600 * time_in_hours * 1
-dt = 60  # in seconds
-
-# Define mat cells
-# eps = [0] * 20
-# eps = [Cell_Mat(dx=0.01, lamb=0.04, mu=70, cp=1470, rho=1000, Tn=20, pv=1000, Lv=2400 * 1e3, kw_lamb=0.006,
-#                 kw_mu=1.57 ** -10) for i in eps]
-# concrete = [0] * 10
-# concrete = [Cell_Mat(dx=0.015, lamb=2.3, mu=70, cp=1000, rho=2500, Tn=20, pv=1000, Lv=2400 * 1e3, kw_lamb=0.006,
-#                      kw_mu=1.57 ** -10) for i in concrete]
-# plaster = [0] * 4
-# plaster = [Cell_Mat(dx=0.005, lamb=0.9, mu=70, cp=1000, rho=2000, Tn=20, pv=1000, Lv=2400 * 1e3, kw_lamb=0.006,
-#                     kw_mu=1.57 ** -10) for i in plaster]
-
-brick = [0] * 20
-brick = [Cell_Mat(dx=0.005, lamb=0.23, mu=1.1 * 1e-7, cp=1000, rho=2800, Tn=20, pv=1000, Lv=2400 * 1e3, kw_lamb=6,
-                  kw_mu=-1.57 * 1e-7) for i in brick]
-
-# Define BCs
-# BC_left = [Boundary_Cell(Tn=20, RC_T=0.04, pv=1200, RC_mu=0.10)]
-# BC_right = [Boundary_Cell(Tn=40, RC_T=0.10, pv=1500, RC_mu=0.10)]
-
-BC_left = [Cell_Mat(dx=0.001, lamb=0.23, mu=1.1 * 1e-7, cp=1000, rho=2800, Tn=20, pv=1200, Lv=2400 * 1e3, kw_lamb=6,
-                  kw_mu=-1.57 * 1e-7)]
-BC_right = [Cell_Mat(dx=0.001, lamb=0.23, mu=1.1 * 1e-7, cp=1000, rho=2800, Tn=20, pv=1200, Lv=2400 * 1e3, kw_lamb=6,
-                  kw_mu=-1.57 * 1e-7)]
-
-# Assemble simulation domain
-# layers = [eps, concrete, plaster]
-layers = [brick]
-# mat_domain = eps + concrete + plaster
-mat_domain = brick
-whole_domain = BC_left + mat_domain + BC_right
-num_cells = whole_domain.__len__()
-
-# %%
-#  Assemble Sim domain into matrices
-# Initialise variables
-
-# Apply neighbours
-for count, cell in enumerate(mat_domain):
-    cell.cell_W = whole_domain[count]
-    cell.cell_E = whole_domain[count + 2]
-
-# %%
-dx_array = np.array([cell.dx for cell in mat_domain])
-
-# Define fields
-Tn = np.array([cell.Tn for cell in whole_domain])
-Tn_plus = np.array([cell.Tn_plus for cell in whole_domain])
-
-p_vap = np.array([cell.pv for cell in whole_domain])
+# Numerical functions
+# -----------------------------
 
 
 def update_conductivity_matrix_temp():
@@ -289,7 +299,8 @@ def update_conductivity_matrix_temp():
     K_T = Left_diagonal + Main_Diagonal + Right_diagonal
 
     # Multiply with constants
-    cpw_array = np.array([cell.cp_w for cell in mat_domain])
+    # cpw_array = np.array([cell.cp_w for cell in mat_domain])
+    cpw_array = np.array([cell.cp for cell in mat_domain])
     Left_diagonal = np.eye(num_cells, num_cells, k=-1)
     Left_diagonal[1:-1, 0:-2] = Left_diagonal[1:-1, 0:-2] * cpw_array
     Right_diagonal = np.eye(num_cells, num_cells, k=1)
@@ -339,7 +350,6 @@ def update_conductivity_matrix_latent():
     Main_Diagonal[1:-1, 1:-1] = Main_Diagonal[1:-1, 1:-1] * - (Kw_array + Ke_array)
     K_latent = Left_diagonal + Main_Diagonal + Right_diagonal
 
-
     latent_array = np.array([cell.Lv for cell in mat_domain])
     Left_diagonal = np.eye(num_cells, num_cells, k=-1)
     Left_diagonal[1:-1, 0:-2] = Left_diagonal[1:-1, 0:-2] * latent_array
@@ -372,39 +382,154 @@ def update_conductivity_matrix_pv():
     K_mu = Left_diagonal + Main_Diagonal + Right_diagonal
 
     # Multiply with constants
-    cm_array = np.array([cell.cm for cell in mat_domain])
-    Left_diagonal = np.eye(num_cells, num_cells, k=-1)
-    Left_diagonal[1:-1, 0:-2] = Left_diagonal[1:-1, 0:-2] * cm_array
-    Right_diagonal = np.eye(num_cells, num_cells, k=1)
-    Right_diagonal[1:-1, 2:] = Right_diagonal[1:-1, 2:] * cm_array
-    Main_Diagonal = np.eye(num_cells, num_cells)
-    Main_Diagonal[1:-1, 1:-1] = Main_Diagonal[1:-1, 1:-1] * cm_array
-    cm_P_constants = Left_diagonal + Main_Diagonal + Right_diagonal
-    cm_P_constants[cm_P_constants == 0] = 1
+    # cm_array = np.array([cell.cm for cell in mat_domain])
+    # Left_diagonal = np.eye(num_cells, num_cells, k=-1)
+    # Left_diagonal[1:-1, 0:-2] = Left_diagonal[1:-1, 0:-2] * cm_array
+    # Right_diagonal = np.eye(num_cells, num_cells, k=1)
+    # Right_diagonal[1:-1, 2:] = Right_diagonal[1:-1, 2:] * cm_array
+    # Main_Diagonal = np.eye(num_cells, num_cells)
+    # Main_Diagonal[1:-1, 1:-1] = Main_Diagonal[1:-1, 1:-1] * cm_array
+    # cm_P_constants = Left_diagonal + Main_Diagonal + Right_diagonal
+    # cm_P_constants[cm_P_constants == 0] = 1
 
-    return K_mu, cm_P_constants, cm_array
+    # return K_mu, cm_P_constants, cm_array
+    return K_mu
+
+# Multiply [K] with constants
+def build_explicit_matrix_temp(K, cp_w, rho, dx_P, dt):
+    K = K / cp_w / rho / dx_P
+    K[0, 0], K[0, 1], K[-1, -1], K[-1, -2] = 0, 0, 0, 0  # ghost lines for boundary conditions
+    # Rewrite [K] * [T] + [T] with identitiy matrix
+    I = np.eye(num_cells, num_cells)
+    L = I + K
+    L = K
+    return L
 
 
-def fc_coupled_HAM(vec_Tpvp, vec_Tpv, K_T, K_mu, K_Latent):
-    # split array
-    n = int(len(vec_Tpv) / 2)  # half index
-    T, pv = vec_Tpv[0:n], vec_Tpv[n:]
-    Tp, pvp = vec_Tpvp[0:n], vec_Tpvp[n:]
+# def build_explicit_matrix_wat(K, cm, dx_P, dt):
+def build_explicit_matrix_wat(K, dx_P, dt):
+    K = K / dx_P
+    K[0, 0], K[0, 1], K[-1, -1], K[-1, -2] = 0, 0, 0, 0  # ghost lines for boundary conditions
+    # Rewrite [K] * [T] + [T] with identitiy matrix
+    I = np.eye(num_cells, num_cells)
+    M = I + K
+    M = K
+    return M
 
-    # Crank-Nicolson scheme
-    # explicit and implicit parts for T
-    exp_T = 0.5 * (np.dot(K_T, T) + np.dot(K_Latent, pv))
-    imp_T = 0.5 * (np.dot(K_T, Tp) + np.dot(K_Latent, pvp))
-    # without latent heat
-    # exp_T = 0.5 * (np.dot(K_T, T))
-    # imp_T = 0.5 * (np.dot(K_T, Tp))
-    T_term = -Tp + T + exp_T + imp_T
-    # explicit and implicit parts for pv
-    exp_pv = 0.5 * (np.dot(K_mu, pv))
-    imp_pv = 0.5 * (np.dot(K_mu, pvp))
-    pv_term = -pvp + pv + exp_pv + imp_pv
-    # send back as one array
-    return np.hstack([T_term, pv_term])
+
+def build_explicit_matrix_latent(K, cp_w, latent_P_constants, dx_P, rho, dt):
+    K = (K * latent_P_constants) / cp_w / rho / dx_P
+    K[0, 0], K[0, 1], K[-1, -1], K[-1, -2] = 0, 0, 0, 0  # ghost lines for boundary conditions
+    # Rewrite [K] * [T] + [T] with identitiy matrix
+    I = np.eye(num_cells, num_cells)
+    Latent = I + K
+    Latent = K
+    return Latent
+
+
+# %% md
+## Input data
+# Here we create our input data for our calculation:
+# %%
+# ----------------------------------
+# Define simulation domain
+# ----------------------------------
+
+# Define Simulation parameters
+time_in_hours = 24  # in hours
+sim_time = 3600 * time_in_hours * 1
+dt = 60  # in seconds
+
+# osb_1 = [0] * 2
+# osb_1 = [Cell_Mat(dx=0.02 / 2, lamb=0.13, mu=50, cp=1000, rho=600, Tn=20, phi=42.46, Lv=2400 * 1e3, kw_lamb=6,
+#                   kw_mu=-1.57 * 1e-7) for i in osb_1]
+#
+# miwo = [0] * 25
+# miwo = [Cell_Mat(dx=0.25 / 25, lamb=0.04, mu=1, cp=1000, rho=50, Tn=20, phi=42.46, Lv=2400 * 1e3, kw_lamb=6,
+#                  kw_mu=-1.57 * 1e-7) for i in miwo]
+#
+# osb_2 = [0] * 2
+# osb_2 = [Cell_Mat(dx=0.02 / 2, lamb=0.13, mu=50, cp=1000, rho=600, Tn=20, phi=42.46, Lv=2400 * 1e3, kw_lamb=6,
+#                   kw_mu=-1.57 * 1e-7) for i in osb_2]
+#
+# eps = [0] * 5
+# eps = [Cell_Mat(dx=0.05 / 5, lamb=0.04, mu=10, cp=1000, rho=20, Tn=20, phi=42.46, Lv=2400 * 1e3, kw_lamb=6,
+#                 kw_mu=-1.57 * 1e-7) for i in eps]
+
+eps = [0] * 20
+eps = [Cell_Mat(dx=0.01, lamb=0.04, cp=1470, mu=60, rho=1000, Tn=20, phi=42.46, Lv=2400 * 1e3, kw_lamb=6,
+                  kw_mu=-1.57 * 1e-7) for i in eps]
+concrete = [0] * 10
+concrete = [Cell_Mat(dx=0.015, lamb=2.3, mu=100, cp=1000, rho=2500, Tn=20, phi=42.46, Lv=2400 * 1e3, kw_lamb=6,
+                  kw_mu=-1.57 * 1e-7) for i in concrete]
+plaster = [0] * 4
+plaster = [Cell_Mat(dx=0.005, lamb=0.9, mu=30, cp=1000, rho=2000, Tn=20, phi=42.46, Lv=2400 * 1e3, kw_lamb=6,
+                  kw_mu=-1.57 * 1e-7) for i in plaster]
+
+# Define BCs
+BC_left = [Boundary_Cell(Tn=20, RC_T=0.13, phi=40)]
+BC_right = [Boundary_Cell(Tn=20, RC_T=0.13, phi=80)]
+
+# Assemble simulation domain
+# layers = [osb_1, miwo, osb_2, eps]
+# mat_domain = osb_1 + miwo + osb_2 + eps
+layers = [eps, concrete, plaster]
+mat_domain = eps + concrete + plaster
+whole_domain = BC_left + mat_domain + BC_right
+num_cells = whole_domain.__len__()
+
+# %%
+#  Assemble Sim domain into matrices
+# Initialise variables
+
+# Apply neighbours
+for count, cell in enumerate(mat_domain):
+    cell.cell_W = whole_domain[count]
+    cell.cell_E = whole_domain[count + 2]
+
+# %%
+dx_array = np.array([cell.dx for cell in mat_domain])
+
+for cell in mat_domain:
+    cell.w = cell.fc_w_phi()
+
+# Define fields
+Tn = np.array([cell.Tn for cell in whole_domain])
+Tn_plus = np.array([cell.Tn_plus for cell in whole_domain])
+
+p_vap = np.array([cell.pv for cell in whole_domain])
+
+wat = np.array([cell.w for cell in whole_domain])
+
+
+# Define the coupled equations for the system
+# --------------------------------------------
+
+def coupled_equation_system(t, vec_T_wat):
+    n = int(len(vec_T_wat) / 2)  # half index
+    T = vec_T_wat[0:n]
+    wat = vec_T_wat[n:]
+
+    for count, cell in enumerate(whole_domain):
+        cell.Tn = T[count]
+        cell.w = wat[count]
+        cell.phi = cell.fc_phi_w()
+    phi = np.array([cell.phi for cell in whole_domain])
+    pv = np.array([cell.pv for cell in whole_domain])
+    K_T, cp_P_constants, rho_P_constants, dx_P_constants, cpw_array, rho_array = update_conductivity_matrix_temp()
+    # K_mu, cm_P_constants, cm_array = update_conductivity_matrix_pv()
+    K_mu= update_conductivity_matrix_pv()
+    K_latent, latent_P_constants = update_conductivity_matrix_latent()
+    L = build_explicit_matrix_temp(K_T, cp_P_constants, rho_P_constants, dx_P_constants, dt)
+    # M = build_explicit_matrix_wat(K_mu, cm_P_constants, dx_P_constants, dt)
+    M = build_explicit_matrix_wat(K_mu, dx_P_constants, dt)
+    Latent = build_explicit_matrix_latent(K_latent, cp_P_constants, latent_P_constants, dx_P_constants, rho_P_constants,
+                                          dt)
+    dTdt = (np.dot(L, T) + np.dot(Latent, pv))
+    # dTdt = (np.dot(L, T))
+    dwdT = (np.dot(M, pv))
+    # dwdT = np.zeros_like(dTdt)
+    return np.hstack([dTdt, dwdT])
 
 
 # %% md
@@ -416,128 +541,35 @@ def fc_coupled_HAM(vec_Tpvp, vec_Tpv, K_T, K_mu, K_Latent):
 # Simulation
 # ----------------------
 
-K_T, cp_P_constants, rho_P_constants, dx_P_constants, cpw_array, rho_array = update_conductivity_matrix_temp()
-K_mu, cm_P_constants, cm_array = update_conductivity_matrix_pv()
+T_w_0 = np.hstack([Tn, wat])
 
-t = 0
+t0 = 0  # Start time in hours
+tf = sim_time  # End time in hours
 
-# Fourier Number for temperature
-smallest_dx = dx_array.min()
-smallest_cp = cpw_array.min()
-smallest_rho = rho_array.min()
-lambda_w_array = np.array([cell.lambda_w for cell in mat_domain])
-biggest_lamb = lambda_w_array.max()
-dt_temp = 0.5 * smallest_cp * smallest_rho * smallest_dx ** 2 / biggest_lamb
-
-# Fourier Number for vapor
-smallest_dx = dx_array.min()
-smallest_cm = cm_array.min()
-
-mu_w_array = np.array([cell.mu_w for cell in mat_domain])
-biggest_mu = mu_w_array.max()
-dt_vap = 0.5 * smallest_cm * smallest_dx ** 2 / biggest_mu
-
-# dt = min(dt_temp, dt_vap)
-
-# Figures for real time plotting
-
-# Create a figure with two subplots
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 5))
-
-dx_array = np.array([cell.dx for cell in mat_domain])
-d_array = np.cumsum(dx_array) - dx_array / 2
-
-
-# %% md
-# Now we can multiply our conductivity matrix with the missing constants:
+t_eval = np.linspace(t0, tf, 100)
 # %%
-# Multiply [K] with constants
-def build_explicit_matrix_temp(K, cp_w, rho, dx_P, dt):
-    K = K / cp_w / rho / dx_P * dt
-    K[0, 0], K[0, 1], K[-1, -1], K[-1, -2] = 0, 0, 0, 0  # ghost lines for boundary conditions
-    # Rewrite [K] * [T] + [T] with identitiy matrix
-    I = np.eye(num_cells, num_cells)
-    L = I + K
-    L = K
-    return L
+# ----------------------
+#       Solve
+# ---------------------
 
+print('Solving the differential equation...')
 
-def build_explicit_matrix_vap(K, cm, dx_P, dt):
-    K = K / cm / dx_P * dt
-    K[0, 0], K[0, 1], K[-1, -1], K[-1, -2] = 0, 0, 0, 0  # ghost lines for boundary conditions
-    # Rewrite [K] * [T] + [T] with identitiy matrix
-    I = np.eye(num_cells, num_cells)
-    M = I + K
-    M = K
-    return M
+sol = solve_ivp(coupled_equation_system, (t0, tf), T_w_0, t_eval=t_eval, dense_output=False, atol=1e-7, rtol=1e-5,
+                method='Radau')
 
-
-def build_explicit_matrix_latent(K, cp_w, latent_P_constants, dx_P, rho, dt):
-    K = (K * latent_P_constants) / cp_w / rho / dx_P * dt
-    K[0, 0], K[0, 1], K[-1, -1], K[-1, -2] = 0, 0, 0, 0  # ghost lines for boundary conditions
-    # Rewrite [K] * [T] + [T] with identitiy matrix
-    I = np.eye(num_cells, num_cells)
-    Latent = I + K
-    Latent = K
-    return Latent
-
-modulo_storage = int(0.1 * 3600)  # sim_time/dt/100
-# preparing post-process
-store_Text, store_pvext = [], []
-store_w, store_phi, store_T, store_pv = [], [], [], []
-
-# %% md
-# And finally run our simulation.
+Tn = sol.y[0:num_cells, -1]
+w = sol.y[num_cells:, -1]
 # %%
-# Simulation Loop
-while t <= sim_time:
-    # Update conductivity matrix
-    K_T, cp_P_constants, rho_P_constants, dx_P_constants, cpw_array, rho_array = update_conductivity_matrix_temp()
-    K_mu, cm_P_constants, cm_array = update_conductivity_matrix_pv()
-    K_latent, latent_P_constants = update_conductivity_matrix_latent()
+# Update the domain
 
-    L = build_explicit_matrix_temp(K_T, cp_P_constants, rho_P_constants, dx_P_constants, dt)
-    M = build_explicit_matrix_vap(K_mu, cm_P_constants, dx_P_constants, dt)
-    Latent = build_explicit_matrix_latent(K_latent, cp_P_constants, latent_P_constants, dx_P_constants, rho_P_constants,
-                                          dt)
-
-    # solve the coupled, non-linear system
-    result_array = fsolve(fc_coupled_HAM,
-                          np.hstack([Tn, p_vap]),
-                          args=(np.hstack([Tn, p_vap]), L, M, Latent))
-
-    # split the result into temperature and vapor pressure
-    Tn_plus = result_array[:num_cells]
-    p_vap_plus = result_array[num_cells:]
-
-
-    Tn = Tn_plus
-    p_vap = p_vap_plus
-
-
-    # do some storage for plotting
-    if (int(t) % modulo_storage) == 0 and t != 0:
-        # store_w.append(w[1:-1] * 1000)
-        # store_phi.append(phi[1:-1])
-        store_T.append(Tn[1:-1])
-        store_pv.append(p_vap[1:-1])
-
-    # # Calculate temperature field
-    # # ------------------------------
-    # # Tn_plus = K @ Tn + Tn
-    # Tn_plus = L @ Tn
-    # Tn = Tn_plus
-    #
-    # # Calculate vapor field
-    # # ------------------------------
-    # p_vap_plus = M @ p_vap
-    # p_vap = p_vap_plus
-
-    t += dt
-
-    # print(L)
-    # print(eps[0].lambda_w)
-    # print(RC_array)
+for count, cell in enumerate(whole_domain):
+    cell.Tn = Tn[count]
+    cell.w = w[count]
+    cell.phi = cell.fc_phi_w()
+pvap = np.array([cell.pv for cell in whole_domain])
+phi = np.array([cell.phi for cell in whole_domain])
+wat = np.array([cell.w for cell in whole_domain])
+Tn = np.array([cell.Tn for cell in whole_domain])
 
 # %% md
 ## Plotting the results
@@ -545,66 +577,78 @@ while t <= sim_time:
 # %%
 
 print("\n#################\nPlotting (can be long)")
-stop = int(len(store_pv))
-start = 0
 
 #  Plot tempfield to check
-plt.subplot(121)
+plt.subplot(221)
 dx_array = np.array([cell.dx for cell in mat_domain])
 d_array = np.cumsum(dx_array) - dx_array / 2
 
-# plt.plot(d_array, Tn[1:-1], '.')
-# plt.plot(d_array, Tn[1:-1], linestyle='dashed', alpha=0.2, color='b')
+plt.plot(d_array, phi[1:-1], linestyle='dashed', alpha=0.2, color='b')
+plt.plot(d_array, phi[1:-1], '.')
 
+for x in np.cumsum(dx_array):
+    plt.axvline(x, alpha=0.2, color='black')
+plt.axvline(0, alpha=1, color='blue')
+plt.axvline(np.cumsum(dx_array)[-1], alpha=1, color='red')
+plt.title(f'Results for the relative humidity at t={sim_time / 3600} h')
 
-for i in range(start, stop):
-    plt.plot(d_array, store_T[i], linestyle='dashed', alpha=0.2, color='b')
-    plt.plot(d_array, store_T[i], '.')
+plt.xlabel('Thickness in Meter')
+plt.ylabel('Realtive Humdity [-]')
 
-# plt.xticks(np.arange(min(d_array), max(d_array), 0.01))
+#  Plot the water content to check
+plt.subplot(222)
+dx_array = np.array([cell.dx for cell in mat_domain])
+d_array = np.cumsum(dx_array) - dx_array / 2
+
+plt.plot(d_array, wat[1:-1], linestyle='dashed', alpha=0.2, color='b')
+plt.plot(d_array, wat[1:-1], '.')
+
 for x in np.cumsum(dx_array):
     plt.axvline(x, alpha=0.2, color='black')
 plt.axvline(0, alpha=1, color='blue')
 plt.axvline(np.cumsum(dx_array)[-1], alpha=1, color='red')
 plt.annotate(xy=(10, 10), text='Left Boundary', fontsize=22)
-# plt.text(-5, 60, 'Right Boundary', fontsize=22)
-plt.text(0.02, 15, f'Left Boundary={BC_left[0].Tn} °C', style='italic', bbox={
-    'facecolor': 'blue', 'alpha': 0.5, 'pad': 10})
-plt.text(0.21, 10, f'Right Boundary={BC_right[0].Tn} °C', style='italic', bbox={
-    'facecolor': 'red', 'alpha': 0.5, 'pad': 10})
-plt.text(0.10, 2, 'Finite Volumes', style='italic', bbox={
-    'facecolor': 'black', 'alpha': 0.3, 'pad': 10})
+plt.title(f'Results for the Water content at t={sim_time / 3600} h')
+
+plt.xlabel('Thickness in Meter')
+plt.ylabel('Water content in kg/m³')
+plt.tight_layout()
+
+plt.subplot(223)
+dx_array = np.array([cell.dx for cell in mat_domain])
+d_array = np.cumsum(dx_array) - dx_array / 2
+
+# Plot the temperature profile
+plt.plot(d_array, Tn[1:-1], linestyle='dashed', alpha=0.2, color='b')
+plt.plot(d_array, Tn[1:-1], '.')
+
+for x in np.cumsum(dx_array):
+    plt.axvline(x, alpha=0.2, color='black')
+plt.axvline(0, alpha=1, color='blue')
+plt.axvline(np.cumsum(dx_array)[-1], alpha=1, color='red')
 plt.title(f'Results for the temperature profile at t={sim_time / 3600} h')
 
 plt.xlabel('Thickness in Meter')
 plt.ylabel('Temperature in Degree Celsius')
-# plt.show()
+
 
 #  Plot vapfield to check
-plt.subplot(122)
+plt.subplot(224)
 dx_array = np.array([cell.dx for cell in mat_domain])
 d_array = np.cumsum(dx_array) - dx_array / 2
 
 # plt.plot(d_array, p_vap[1:-1], '.')
 # plt.plot(d_array, p_vap[1:-1], linestyle='dashed', alpha=0.2, color='b')
 
-for i in range(start, stop):
-    plt.plot(d_array, store_pv[i], linestyle='dashed', alpha=0.2, color='b')
-    plt.plot(d_array, store_pv[i], '.')
+plt.plot(d_array, pvap[1:-1], linestyle='dashed', alpha=0.2, color='b')
+plt.plot(d_array, pvap[1:-1], '.')
 
 for x in np.cumsum(dx_array):
     plt.axvline(x, alpha=0.2, color='black')
 plt.axvline(0, alpha=1, color='blue')
 plt.axvline(np.cumsum(dx_array)[-1], alpha=1, color='red')
 plt.annotate(xy=(10, 10), text='Left Boundary', fontsize=22)
-
-plt.text(0.02, 15, f'Left Boundary={BC_left[0].Tn} °C', style='italic', bbox={
-    'facecolor': 'blue', 'alpha': 0.5, 'pad': 10})
-plt.text(0.21, 10, f'Right Boundary={BC_right[0].Tn} °C', style='italic', bbox={
-    'facecolor': 'red', 'alpha': 0.5, 'pad': 10})
-plt.text(0.10, 2, 'Finite Volumes', style='italic', bbox={
-    'facecolor': 'black', 'alpha': 0.3, 'pad': 10})
-plt.title(f'Results for the Vapour-Pressure profile at t={sim_time / 3600} h')
+plt.title(f'Results for the Vapour Pressure at t={sim_time / 3600} h')
 
 plt.xlabel('Thickness in Meter')
 plt.ylabel('Vapour Pressure in Pascal')
